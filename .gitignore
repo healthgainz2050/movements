@@ -69,4 +69,4 @@ yarn-error.log
 android/app/google-services.json
 
 # Ignore GoogleService-Info.plist for Firebase
-ios/Runner/GoogleService-Info.plist
+ios/movements/GoogleService-Info.plist
