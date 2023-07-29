@@ -1,10 +1,11 @@
 import {Alert} from 'react-native';
-import {auth, db} from './../../Controllers/Firebase';
 // import {
 //   GoogleSignin,
 //   statusCodes,
 // } from '@react-native-google-signin/google-signin';
-import {lowerCase} from '../../utils';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import {lowerCase} from '../../../utils';
 
 // export const signInWithGoogleAsync = async () => {
 //   try {
@@ -19,22 +20,10 @@ import {lowerCase} from '../../utils';
 //   }
 // };
 
-export const handleLogin = async (form, navigation, context) => {
+export const handleLogin = async (form, context) => {
   const {email, password} = form;
   try {
-    let userData = await auth.signInWithEmailAndPassword(
-      lowerCase(email),
-      password,
-    );
-    let user = userData?.user;
-    let getuser = await db.collection('users').doc(user.uid).get();
-    let profileData = {...getuser?.data(), uid: user.uid};
-    context.updateState({user: profileData});
-    if (profileData?.physio) {
-      navigation.navigate('Patients', {user: profileData});
-    } else {
-      navigation.navigate('Playlist', {user: profileData});
-    }
+    await auth().signInWithEmailAndPassword(lowerCase(email), password);
   } catch (error) {
     let errorMessage = error.message;
     Alert.alert('Alert', errorMessage);

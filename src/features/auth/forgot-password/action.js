@@ -1,8 +1,8 @@
 import Toast from 'react-native-toast-message';
-import {auth} from '../../Controllers/Firebase';
-import {lowerCase} from '../../utils';
+import auth from '@react-native-firebase/auth';
+import {lowerCase} from '../../../utils';
 
-export const forgotPassword = async (form) => {
+export const forgotPassword = async form => {
   if (form.email === '' || !form.email) {
     Toast.show({
       type: 'info',
@@ -14,7 +14,7 @@ export const forgotPassword = async (form) => {
     return;
   } else {
     try {
-      await auth.sendPasswordResetEmail(lowerCase(form.email));
+      await auth().sendPasswordResetEmail(lowerCase(form.email));
       Toast.show({
         type: 'success',
         text1: 'A reset password email has been sent on your email address',

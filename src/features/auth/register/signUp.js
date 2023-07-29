@@ -4,7 +4,6 @@ import {styles} from './styles';
 import {images} from '../../../assets';
 import {lowerCase} from '../../../utils';
 import {NBInput} from '../../../components/nb-input';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import {handleSignup, openUrl} from './actions';
 import * as Animatable from 'react-native-animatable';
 import {Heading} from 'native-base';
@@ -14,14 +13,17 @@ import GlobalContext from '../../../services/context/globalContext';
 
 export const Signup = ({navigation}) => {
   const context = useContext(GlobalContext);
+
   const [form, setForm] = useState({
-    displayName: '',
-    password: '',
-    name: '',
-    dob: null,
-    physio: false,
+    displayName: 'shoaib',
+    password: '123456',
+    name: 'shoaib',
+    physio: true,
   });
-  const [email, setEmail] = useState('');
+
+  const [email, setEmail] = useState(
+    `this.shoaib+${Math.floor(Math.random() * 30)}@gmail.com`,
+  );
 
   const updateInputVal = (val, prop) => {
     const newValue = {
@@ -74,7 +76,7 @@ export const Signup = ({navigation}) => {
           onValueChange={physio => setForm({...form, physio})}
         />
       </View>
-      <View style={{marginBottom: 20}}>
+      <View style={styles.mb20}>
         <Text style={styles.gdpr}>
           By using HealthGainz application, you agree to
         </Text>
@@ -89,28 +91,12 @@ export const Signup = ({navigation}) => {
           </Text>
         </Text>
       </View>
-      <NBButton
-        label="Sign Up"
-        onPress={() => handleSignup(myForm, navigation, context)}
-      />
+      <NBButton label="Sign Up" onPress={() => handleSignup(myForm, context)} />
 
       <Toast position="bottom" bottomOffset={20} />
-      {/* <View style={styles.googleBtn}>
-        <Icon
-          style={{fontSize: 20}}
-          type="FontAwesome"
-          name="google"
-          color="red"
-        />
-        <Button
-          color="#3D9DF2"
-          title="Sign up with Google"
-          onPress={() => handleSignup(form, navigation)}
-        />
-      </View> */}
       <Text
         style={styles.alreadyBtn}
-        onPress={() => navigation.navigate('Login')}>
+        onPress={() => navigation.navigate('SignIn')}>
         Already Registered?{' '}
         <Text style={styles.tapText}>Tap here to Log In</Text>
       </Text>

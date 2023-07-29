@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Box} from 'native-base';
+import {Button, Box, Text} from 'native-base';
 
 export const NBButton = ({label, onPress}) => {
   return (
@@ -10,7 +10,9 @@ export const NBButton = ({label, onPress}) => {
         pl="20"
         pr="20"
         onPress={onPress}>
-        {label}
+        <Text fontWeight="bold" color="white">
+          {label}
+        </Text>
       </Button>
     </Box>
   );

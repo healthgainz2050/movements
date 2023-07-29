@@ -46,7 +46,7 @@ export const ForgotPassword = ({navigation}) => {
           />
           <Text
             style={styles.loginText}
-            onPress={() => navigation.navigate('Register')}>
+            onPress={() => navigation.navigate('SignUp')}>
             Don't have account? Tap here to Sign Up
           </Text>
           <Toast position="bottom" bottomOffset={20} />
