@@ -1,9 +1,10 @@
 import {Alert, Linking} from 'react-native';
-import {auth, db} from '../../Controllers/Firebase';
-import {lowerCase} from '../../utils';
 import Toast from 'react-native-toast-message';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import {lowerCase} from '../../../utils';
 
-export const handleSignup = async (form, navigation, context) => {
+export const handleSignup = async (form, context) => {
   if (form.displayName === '' || !form.displayName) {
     Toast.show({
       type: 'info',
@@ -36,26 +37,26 @@ export const handleSignup = async (form, navigation, context) => {
     return;
   }
   try {
-    let signup = await auth.createUserWithEmailAndPassword(
+    context.updateState({user: userInfo});
+    let signup = await auth().createUserWithEmailAndPassword(
       lowerCase(form.email),
       form.password,
     );
     let uid = signup.user.uid;
     let userInfo = form;
-    userInfo['password'] = null;
-    let createuser = await db.collection('users').doc(uid).set(userInfo);
-    console.log('@@@@ createdUser', createuser);
+    delete userInfo['password'];
+
     context.updateState({user: userInfo});
-    if (form.physio) {
-      navigation.navigate('Patients');
-    } else {
-      navigation.navigate('Playlist', {
-        name: form?.displayName,
-        item: userInfo,
-      });
-    }
+    await firestore().collection('users').doc(uid).set(userInfo);
   } catch (error) {
     let errorMessage = error.message;
+    if (error.code === 'auth/email-already-in-use') {
+      errorMessage = 'That email address is already in use!';
+    }
+
+    if (error.code === 'auth/invalid-email') {
+      errorMessage = 'That email address is invalid!';
+    }
 
     Alert.alert('Alert', errorMessage);
   }

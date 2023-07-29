@@ -64,6 +64,14 @@ export const styles = StyleSheet.create({
     marginTop: 5,
   },
   alreadyBtn: {alignSelf: 'center', paddingTop: 10, paddingEnd: 30},
-  tapText: {color: '#3629C5', alignSelf: 'center', fontWeight:"bold", paddingBottom: 10},
-  urlText: {color: '#3629C5', alignSelf: 'center', fontWeight:"bold"},
+  tapText: {
+    color: '#3629C5',
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    paddingBottom: 10,
+  },
+  urlText: {color: '#3629C5', alignSelf: 'center', fontWeight: 'bold'},
+  mb20: {
+    marginBottom: 20,
+  },
 });

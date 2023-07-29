@@ -7,7 +7,6 @@ import {
   View,
   Platform,
 } from 'react-native';
-import {Button, Box} from 'native-base';
 import * as Animatable from 'react-native-animatable';
 import {NBButton} from '../../../components/nb-button';
 import {NBInput} from '../../../components/nb-input';
@@ -16,7 +15,7 @@ import {styles} from './styles';
 import {images} from '../../../assets';
 import GlobalContext from '../../../services/context/globalContext';
 import {handleLogin, googleConfigure, signInWithGoogleAsync} from './actions';
-// import {Cone} from '../../Components/curve-shape';
+
 const zoomOut = {
   0: {
     opacity: 1,
@@ -72,10 +71,7 @@ export const Login = ({navigation}) => {
         onChangeText={password => setForm({...form, password})}
       />
 
-      <NBButton
-        label="Sign In"
-        onPress={() => handleLogin(form, navigation, context)}
-      />
+      <NBButton label="Sign In" onPress={() => handleLogin(form, context)} />
 
       {Platform.OS === 'android' ? (
         <GoogleSigninButton

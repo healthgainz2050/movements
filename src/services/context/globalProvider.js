@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import GlobalContext from './globalContext';
 
 export default class GlobalProvider extends Component {
-  state = {};
+  state = {
+    user: null,
+    authLoading: true,
+  };
 
   updateState = newState => {
     this.setState({...this.state, ...newState});
