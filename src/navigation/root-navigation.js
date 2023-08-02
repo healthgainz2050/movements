@@ -9,6 +9,7 @@ import {Splash} from '../features/auth/splash/splash';
 import {ForgotPassword} from '../features/auth/forgot-password';
 import {Signup} from '../features/auth/register';
 import firestore from '@react-native-firebase/firestore';
+import {Home} from '../features/patient/home';
 
 const Stack = createNativeStackNavigator();
 
@@ -89,26 +90,26 @@ export const RootNavigation = () => {
               name="SignIn"
               component={Login}
               options={{
-                title: 'Sign in',
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="ForgotPassword"
               component={ForgotPassword}
               options={{
-                title: 'Forgot Password',
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="SignUp"
               component={Signup}
               options={{
-                title: 'Sign up',
+                headerShown: false,
               }}
             />
           </>
         ) : user?.physio ? (
-          <Stack.Screen name="HomePhysio" component={HomeScreenPhysio} />
+          <Stack.Screen name="HomePhysio" component={Home} />
         ) : (
           <Stack.Screen name="Home" component={HomeScreen} />
         )}
