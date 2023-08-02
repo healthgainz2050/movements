@@ -7,8 +7,6 @@ import React, {
 } from 'react';
 import {View, AppState} from 'react-native';
 import {Container, Box, Heading} from 'native-base';
-import {HeaderBackButton} from '@react-navigation/native-stack';
-import auth from '@react-native-firebase/auth';
 import {VideoPlayer} from '../../../components/video-player';
 import {Playlist} from './playlist';
 import {Spinner} from '../../../components/spinner';
@@ -18,10 +16,9 @@ import {
   getPlaylistAssignedToPatient,
 } from '../../../services/firebase';
 import {AppointmentStatus} from './appointment-status/appointment-status';
-import {HeaderTitle} from '../../../components/header-title';
+
 import {styles} from './styles';
 import {downloadFile} from './actions';
-import {Cone} from '../../../components/top-curve';
 import * as Progress from 'react-native-progress';
 
 export const Home = () => {
@@ -157,24 +154,4 @@ export const Home = () => {
       </Container>
     </>
   );
-};
-
-Home.navigationOptions = ({navigation}) => {
-  return {
-    headerTitle: () => (
-      <HeaderTitle title={navigation.state.params?.user?.name} />
-    ),
-    headerLeft: () => (
-      <HeaderBackButton
-        onPress={async () => {
-          await auth()
-            .signOut()
-            .then(() => console.log('User signed out!'));
-        }}
-        label={'Sign Out'}
-        labelVisible
-      />
-    ),
-    headerRight: () => <Cone />,
-  };
 };

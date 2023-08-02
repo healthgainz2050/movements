@@ -10,6 +10,7 @@ import {ForgotPassword} from '../features/auth/forgot-password';
 import {Signup} from '../features/auth/register';
 import firestore from '@react-native-firebase/firestore';
 import {Home} from '../features/patient/home';
+import {SignOutButton} from '../components/sign-out-button';
 
 const Stack = createNativeStackNavigator();
 
@@ -109,7 +110,14 @@ export const RootNavigation = () => {
             />
           </>
         ) : user?.physio ? (
-          <Stack.Screen name="HomePhysio" component={Home} />
+          <Stack.Screen
+            name="HomePhysio"
+            component={Home}
+            options={{
+              headerTitle: user?.name || user?.displayName,
+              headerLeft: () => <SignOutButton />,
+            }}
+          />
         ) : (
           <Stack.Screen name="Home" component={HomeScreen} />
         )}
