@@ -1,16 +1,25 @@
 import React, {useContext, useEffect} from 'react';
 import {View, Text, Button} from 'react-native';
-import GlobalContext from '../services/context/globalContext';
 import auth from '@react-native-firebase/auth';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import firestore from '@react-native-firebase/firestore';
+
+/**Auth Feature */
 import {Login} from '../features/auth/login';
 import {Splash} from '../features/auth/splash/splash';
 import {ForgotPassword} from '../features/auth/forgot-password';
 import {Signup} from '../features/auth/register';
-import firestore from '@react-native-firebase/firestore';
-import {Home} from '../features/patient/home';
 import {SignOutButton} from '../components/sign-out-button';
+
+/**Patient Feature */
+import {Home} from '../features/patient/home';
+
+/**Physio Feature */
+import {PhysioHome} from '../features/physio';
+import {AddPatient} from '../features/physio/patients/add-patient';
+/**Context */
+import GlobalContext from '../services/context/globalContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -110,16 +119,35 @@ export const RootNavigation = () => {
             />
           </>
         ) : user?.physio ? (
+          <>
+            <Stack.Screen
+              name="PhysioHome"
+              component={PhysioHome}
+              options={{
+                headerTitle: 'Clients',
+                headerLeft: () => <SignOutButton />,
+              }}
+            />
+            <Stack.Screen
+              name="AddPatient"
+              component={AddPatient}
+              options={{
+                headerTitle: 'Add Client',
+                headerShown: false,
+                // headerLeft: () => <SignOutButton />,
+                presentation: "modal",
+              }}
+            />
+          </>
+        ) : (
           <Stack.Screen
-            name="HomePhysio"
+            name="ClientHome"
             component={Home}
             options={{
               headerTitle: user?.name || user?.displayName,
               headerLeft: () => <SignOutButton />,
             }}
           />
-        ) : (
-          <Stack.Screen name="Home" component={HomeScreen} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

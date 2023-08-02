@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Box, Text} from 'native-base';
 
-export const NBButton = ({label, onPress}) => {
+export const NBButton = ({label, onPress, rest}) => {
   return (
     <Box alignItems="center" _text={textStyle}>
       <Button
@@ -9,7 +9,8 @@ export const NBButton = ({label, onPress}) => {
         backgroundColor="#007aff"
         pl="20"
         pr="20"
-        onPress={onPress}>
+        onPress={onPress}
+        {...rest}>
         <Text fontWeight="bold" color="white">
           {label}
         </Text>
