@@ -79,7 +79,7 @@ export const PatientItem = ({
     const pdf = PDF({onPress: onPressPDF});
 
     const onPressAnalysis = () => {
-      navigation.navigate('Analysis', {
+      navigation.navigate('UsageAnalytics', {
         item: item,
       });
       context.updateState({activePatient: item});
@@ -130,12 +130,10 @@ export const PatientItem = ({
     if (playlist) {
       swipableArray.push(pdf);
     }
-    // swipableArray.concat([Item1, Item2, Item3]);
 
     return swipableArray;
   };
 
-  // return <View style={{height: 50, width: 100, backgroundColor:'red'}}/>
   return (
     <Swipeout style={styles.swipeOutContainer} autoClose right={onSwipeout()}>
       {modalVisible ? (

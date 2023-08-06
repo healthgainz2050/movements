@@ -1,14 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import SubscribeToCollection from '../../../HOC/List';
-import {Content} from '@native-base';
-import {Platform, View, Dimensions, Text} from 'react-native';
-import {HeaderBackButton} from 'react-navigation-stack';
-import {Button} from '../../../Components/Button';
+import SubscribeToCollection from '../../../../components/HOC/list-of-users';
+import {Center, Container, Button, HStack} from 'native-base';
+import {View, Dimensions, Text} from 'react-native';
+import {NBButton} from '../../../../components/nb-button';
 import {LineChart} from 'react-native-chart-kit';
-import GlobalContext from '../../../context/globalContext';
+import GlobalContext from '../../../../services/context/globalContext';
 import moment from 'moment';
-import {HeaderTitle} from '../../../Components/HeaderTitle';
-import {Container} from '@native-base';
 import {
   compare,
   getLabels,
@@ -18,7 +15,7 @@ import {
   onNextPress,
   onPreviousPress,
 } from './actions';
-import {lineChartConfig} from './ChartConfigs';
+import {lineChartConfig} from './chart-config';
 const windowWidth = Dimensions.get('window').width;
 
 const AppUsageComponent = () => {
@@ -30,9 +27,11 @@ const AppUsageComponent = () => {
     firstDate: moment().subtract(6, 'days'),
     secondDate: moment(),
   });
+  
   useEffect(() => {
     getUsageStats(setIsLoading, setStats, activePatient);
   }, []);
+
   const isNextEnabled = compare(selectedRange.secondDate, new Date()) === -1;
   const isCurrentEnabled = compare(selectedRange.secondDate, new Date()) !== 0;
   const {firstDate, secondDate} = selectedRange;
@@ -48,61 +47,44 @@ const AppUsageComponent = () => {
     ],
     legend: ['Usage Stats in Mins'],
   };
-  console.log('@@@@ firstD', getDataSet(firstDate, stats));
   return (
-    <Container>
-      <Content style={{backgroundColor: 'white', margin: 15}}>
-        <View>
-          <Text>
-            Application Usage (
-            {`${moment(selectedRange.firstDate).format('ll')}`} -{' '}
-            {`${moment(selectedRange.secondDate).format('ll')}`})
-          </Text>
-          <View style={{flex: 1, flexDirection: 'row'}}>
-            <Button
-              text="Previous Week"
-              primary
-              onPress={() => onPreviousPress(selectedRange, setRange)}
-            />
-            <Button
-              text="Current Week"
-              onPress={() => onCurrentPress(setRange)}
-              primary={isCurrentEnabled}
-              disabled={!isCurrentEnabled}
-            />
-            <Button
-              text="Next Week"
-              onPress={() => onNextPress(selectedRange, setRange)}
-              primary={isNextEnabled}
-              disabled={!isNextEnabled}
-            />
-          </View>
-          <LineChart
-            data={data}
-            width={windowWidth * 0.95}
-            height={220}
-            chartConfig={lineChartConfig}
-          />
-        </View>
-      </Content>
+    <Container maxWidth="100%" p="3">
+      <Text>
+        Application Usage ({`${moment(selectedRange.firstDate).format('ll')}`} -{' '}
+        {`${moment(selectedRange.secondDate).format('ll')}`})
+      </Text>
+      <HStack justifyContent="space-between" mt="5" mb="5">
+        <Button
+          onPress={() => onPreviousPress(selectedRange, setRange)}
+          backgroundColor="#007aff">
+          Previous Week
+        </Button>
+        <Button
+          ml="2"
+          mr="2"
+          onPress={() => onCurrentPress(setRange)}
+          backgroundColor={!isCurrentEnabled ? '#61677A' : '#007aff'}
+          disabled={!isCurrentEnabled}>
+          Current Week
+        </Button>
+        <Button
+          onPress={() => onNextPress(selectedRange, setRange)}
+          disabled={!isNextEnabled}
+          backgroundColor={!isNextEnabled ? '#61677A' : '#007aff'}>
+          Next Week
+        </Button>
+      </HStack>
+      <LineChart
+        data={data}
+        width={windowWidth * 0.95}
+        height={220}
+        style={{alignSelf: 'center'}}
+        chartConfig={lineChartConfig}
+      />
     </Container>
   );
 };
 
 const AppUsage = SubscribeToCollection('exercises')(AppUsageComponent);
-
-AppUsage.navigationOptions = ({navigation}) => {
-  return {
-    headerTitle: () => <HeaderTitle title={'App Usage'} />,
-    headerLeft: () => (
-      <HeaderBackButton
-        onPress={() => {
-          navigation.goBack();
-        }}
-        backTitleVisible={Platform.OS == 'ios' ? true : false}
-      />
-    ),
-  };
-};
 
 export default AppUsage;

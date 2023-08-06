@@ -1,7 +1,9 @@
-import {getVideoSentiments} from '../../../Services/analytics';
-import {EMOJI_TYPES} from '../../../Components/feedback-modal/emoji/constants';
+import {
+  getVideoSentiments,
+  getAppUsageStats,
+} from '../../../../services/firebase';
+import {EMOJI_TYPES} from '../../../../components/feedback-modal/emoji/constants';
 import moment from 'moment';
-import {getAppUsageStats} from '../../../Services/analytics';
 
 const fontSize = 11;
 export const calculateSentiments = async (
@@ -72,7 +74,7 @@ export const compare = (dateTimeA, dateTimeB) => {
   else return 0;
 };
 
-export const getLabels = (startDate) => {
+export const getLabels = startDate => {
   const labels = [];
   for (let i = 0; i < 7; i++) {
     labels.push(moment(startDate).add(i, 'days').format('ddd DD'));
@@ -118,7 +120,7 @@ export const onPreviousPress = (selectedRange, setRange) => {
     secondDate: moment(firstDate),
   });
 };
-export const onCurrentPress = (setRange) => {
+export const onCurrentPress = setRange => {
   setRange({
     firstDate: moment().subtract(6, 'days'),
     secondDate: moment(),

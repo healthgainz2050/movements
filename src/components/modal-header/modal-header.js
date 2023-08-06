@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, HStack, Heading, Text, Flex, Center} from 'native-base';
+import {Platform} from 'react-native';
 import {styles} from './styles';
 import {Cone} from '../top-curve';
 import {useNavigation} from '@react-navigation/native';
@@ -19,9 +20,7 @@ export const ModalHeader = props => {
           <Text style={styles.cancelText}>{props.rightText}</Text>
         </Button>
         <Heading size="sm">{props.title}</Heading>
-        <Center>
-          <Cone variant="modal" />
-        </Center>
+        <Center>{Platform.OS === 'ios' && <Cone variant="modal" />}</Center>
       </Flex>
     </HStack>
   );

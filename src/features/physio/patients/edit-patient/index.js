@@ -1,1 +1,1 @@
-export {EditPatient} from './EditPatient';
+export {EditPatient} from './edit-patient';

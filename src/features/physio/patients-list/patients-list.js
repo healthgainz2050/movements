@@ -2,16 +2,11 @@ import React from 'react';
 import SubscribeToCollection from '../../../components/HOC/list-of-users';
 import {Container, Box, FlatList} from 'native-base';
 import GlobalContext from '../../../services/context/globalContext';
-// import {
-//   fetchAllPatients,
-//   fetchAppUrls,
-// } from '../../../services/firebase/patient';
 import {
   fetchAllPatients,
   fetchAppUrls,
   getAllPlaylists,
 } from '../../../services/firebase';
-// import {getAllPlaylists} from '../../../services/firebase/playlist';
 import {PatientItem} from './patient-item';
 import {ActivityIndicator} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
@@ -110,14 +105,7 @@ class PatientListView extends React.Component {
           )}
         </Box>
         <FlatList
-          style={{
-            boderWidth: 1,
-            borderColor: 'red',
-            backgroundColor: 'red',
-            width: '1',
-            height: '85%',
-            width: '100%',
-          }}
+          width="100%"
           m="5"
           data={patientList}
           keyExtractor={(item, index) => {

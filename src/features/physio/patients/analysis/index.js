@@ -1,56 +1,34 @@
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import VideoSentiments from './video-sentimentals';
 import AppUsage from './app-usage';
-import {HeaderTitle} from '../../../Components/HeaderTitle';
-import {Cone} from '../../../Components/curve-shape';
 import React from 'react';
-import {HeaderBackButton} from 'react-navigation-stack';
-import {Platform} from 'react-native';
 
-export default createMaterialTopTabNavigator(
-  {
-    AppUsage: {
-      screen: AppUsage,
-      navigationOptions: {
-        tabBarLabel: 'App Usage',
-        tabBarOptions: {
-          labelStyle: {
-            fontWeight: 'bold',
-          },
-        },
-      },
-    },
-    VideoSentiments: {
-      screen: VideoSentiments,
-      navigationOptions: {
-        tabBarLabel: 'Video Ratings',
-        tabBarOptions: {
-          labelStyle: {
-            fontWeight: 'bold',
-          },
-        },
-      },
-    },
-  },
-  {
-    initialRouteName: 'AppUsage',
-    activeColor: '#3862CF',
-    inactiveColor: '#3e2465',
-    barStyle: {backgroundColor: '#694fad'},
-    navigationOptions: ({navigation}) => {
-      return {
-        headerTitle: () => <HeaderTitle title={'Usage'} />,
-        headerRight: () => <Cone />,
-        headerLeft: () => {
-          return (
-            <HeaderBackButton
-              onPress={() => navigation.goBack()}
-              label={'Back'}
-              backTitleVisible={Platform.OS == 'ios' ? true : false}
-            />
-          );
-        },
-      };
-    },
-  },
-);
+const Tab = createMaterialTopTabNavigator();
+
+export const UsageAnalytics = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName="AppUsage"
+      screenOptions={{
+        tabBarActiveTintColor: '#3862CF',
+        tabBarInactiveTintColor: '#3e2465',
+        tabBarLabelStyle: {fontWeight: 'bold'},
+        // tabBarStyle: {backgroundColor: '#694fad'},
+      }}>
+      <Tab.Screen
+        name="App Usage"
+        component={AppUsage}
+        screenOptions={{
+          tabBarLabel: 'App Usage',
+        }}
+      />
+      <Tab.Screen
+        name="Video Sentiments"
+        component={VideoSentiments}
+        screenOptions={{
+          tabBarLabel: 'Video Ratings',
+        }}
+      />
+    </Tab.Navigator>
+  );
+};

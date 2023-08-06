@@ -1,14 +1,14 @@
 import React from 'react';
 import {Button, Box, Text} from 'native-base';
 
-export const NBButton = ({label, onPress, rest}) => {
+export const NBButton = ({label, onPress, size, pl, pr, rest}) => {
   return (
     <Box alignItems="center" _text={textStyle}>
       <Button
-        size={'lg'}
+        size={size || 'lg'}
         backgroundColor="#007aff"
-        pl="20"
-        pr="20"
+        pl={pl || '20'}
+        pr={pr || '20'}
         onPress={onPress}
         {...rest}>
         <Text fontWeight="bold" color="white">

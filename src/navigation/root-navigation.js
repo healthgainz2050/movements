@@ -18,6 +18,8 @@ import {Home} from '../features/patient/home';
 /**Physio Feature */
 import {PhysioHome} from '../features/physio';
 import {AddPatient} from '../features/physio/patients/add-patient';
+import {UsageAnalytics} from '../features/physio/patients/analysis';
+import {EditPatient} from '../features/physio/patients/edit-patient';
 /**Context */
 import GlobalContext from '../services/context/globalContext';
 
@@ -135,7 +137,24 @@ export const RootNavigation = () => {
                 headerTitle: 'Add Client',
                 headerShown: false,
                 // headerLeft: () => <SignOutButton />,
-                presentation: "modal",
+                presentation: 'modal',
+              }}
+            />
+            <Stack.Screen
+              name="UsageAnalytics"
+              component={UsageAnalytics}
+              options={{
+                headerTitle: 'App Usage',
+                // headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="EditPatient"
+              component={EditPatient}
+              options={{
+                headerTitle: 'Update Client',
+                headerShown: false,
+                presentation: 'modal',
               }}
             />
           </>
