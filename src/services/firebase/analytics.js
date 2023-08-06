@@ -28,7 +28,7 @@ export const reportAppUsageTime = async (userId, email, startTime, usage) => {
   try {
     const startTimeKey = moment(startTime).format('DD-MM-YY');
     let usageDocs = await firestore()
-      .collection('/appUsage/')
+      .collection('/app-usage/')
       .where('userId', '==', userId)
       .get();
     let previousUsage = 0;
@@ -44,7 +44,7 @@ export const reportAppUsageTime = async (userId, email, startTime, usage) => {
       [startTimeKey]: {timeStamp: startTimeKey, usage: previousUsage + usage},
     };
     await firestore()
-      .collection('/appUsage/')
+      .collection('/app-usage/')
       .doc(userId)
       .set(data, {merge: true});
   } catch (error) {
@@ -75,4 +75,11 @@ export const getVideoSentiments = async email => {
     }
   });
   return videoSentiments;
+};
+
+export default {
+  addSentimentToExercise,
+  reportAppUsageTime,
+  getAppUsageStats,
+  getVideoSentiments,
 };

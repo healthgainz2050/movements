@@ -2,15 +2,18 @@ import firestore from '@react-native-firebase/firestore';
 import {lowerCase} from '../../utils';
 
 const fetchAllPatients = async physioEmail => {
+  console.log('@@@ fetchAll Patients', physioEmail);
   try {
     const patientsDocs = await firestore()
-      .collection('002_patients')
+      .collection('patients')
       .where('physioEmail', '==', lowerCase(physioEmail))
       .get();
     const patients = [];
-    patientsDocs.forEach(function (doc) {
-      patients.push(doc.data());
+    console.log('@@@ 1 Patients', patients);
+    patientsDocs?.forEach(function (doc) {
+      patients.push(doc?.data());
     });
+    console.log('@@@ 2 Patients', patients);
     return patients;
   } catch (error) {
     console.error('@@@ error in fetchAllPatients', error);
@@ -20,7 +23,7 @@ const fetchAllPatients = async physioEmail => {
 
 const fetchAppUrls = async () => {
   try {
-    const appUrlDocs = await firestore().collection('appUrls').get();
+    const appUrlDocs = await firestore().collection('app-urls').get();
     const appUrls = [];
     appUrlDocs.forEach(function (doc) {
       appUrls.push(doc.data());

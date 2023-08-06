@@ -8,7 +8,7 @@ import {lowerCase} from '../../utils';
 
 const getAllExercises = async createdBy => {
   let exercisesDocs = await firestore()
-    .collection('003_exercises')
+    .collection('exercises')
     .where('physioEmail', '==', lowerCase(createdBy))
     .get();
   const exercises = [];
@@ -69,7 +69,7 @@ const assignPlaylistToPatient = async (patientEmail, playlistId) => {
   }
 
   await firestore()
-    .collection('002_patients')
+    .collection('patients')
     .where('patientEmail', '==', lowerCase(patientEmail))
     .get()
     .then(docs => {

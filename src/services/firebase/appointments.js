@@ -2,75 +2,58 @@ import moment from 'moment';
 import firestore from '@react-native-firebase/firestore';
 import {lowerCase} from '../../utils';
 
-export const addSentimentToExercise = async (
-  exerciseId,
-  userId,
-  email,
-  sentiment,
-) => {
-  try {
-    const data = {
-      [lowerCase(email)]: {
-        exerciseId,
-        userId,
-        sentiment,
-        email: lowerCase(email),
-      },
-    };
-    var sentimentRef = firestore().collection('/sentiments/').doc(exerciseId);
-    await sentimentRef.set(data, {merge: true});
-  } catch (error) {
-    console.log('@@@ error in writing sentiments', error);
-  }
+const addAppointment = data => {
+  const appointment = {
+    alarms: [{date: '2021-05-23T20:42:22.000Z'}],
+    attendees: [],
+    endDate: '2021-05-24T01:32:22.000Z',
+    calendar: {
+      allowsModifications: true,
+      allowedAvailabilities: ['busy', 'free'],
+      source: 'this.test222@gmail.com',
+      type: 'com.google',
+      title: 'this.test222@gmail.com',
+      isPrimary: true,
+      color: '#9FE1E7',
+      id: '2',
+    },
+    startDate: '2021-05-23T20:32:22.000Z',
+    availability: 'busy',
+    description: 'Please be there on time',
+    location: '',
+    allDay: false,
+    title: 'Appointment',
+    id: '1',
+  };
+  const createdBy = 'this.shoaib@gmail.com';
+  const cretaedFor = 'Anna.bill@gmail.com';
 };
 
-export const reportAppUsageTime = async (userId, email, startTime, usage) => {
-  try {
-    const startTimeKey = moment(startTime).format('DD-MM-YY');
-    let usageDocs = await firestore()
-      .collection('/appUsage/')
-      .where('userId', '==', userId)
-      .get();
-    let previousUsage = 0;
-    usageDocs?.forEach((doc, index) => {
-      if (doc?.data()[startTimeKey]) {
-        previousUsage = doc?.data()[startTimeKey]?.usage;
-      }
-    });
-    const data = {
-      email: lowerCase(email),
-      userId: userId,
-      [startTimeKey]: {timeStamp: startTimeKey, usage: previousUsage + usage},
-    };
-    await firestore()
-      .collection('/appUsage/')
-      .doc(userId)
-      .set(data, {merge: true});
-  } catch (error) {
-    console.log('@@@ error in writing app usage time', error);
-  }
-};
+/**
+ * this api returns all appointments created for a specific person
+ * patientEmail (is the person for which we have created the appointment)
+ * physioEmail (is the person for who have created the appointment)
+ */
 
-export const getAppUsageStats = async email => {
-  let appUsageDocs = await firestore()
-    .collection('appUsage')
-    .where('email', '==', lowerCase(email))
+const getAppointment = async createdFor => {
+  // const createdBy = 'this.shoaib@gmail.com';
+  // const cretaedFor = 'Anna.bill@gmail.com';
+
+  let appointmentsDocs = await firestore()
+    .collection('appointments')
+    .where('patientEmail', '==', lowerCase(createdFor))
     .get();
-  const appUsage = [];
-  appUsageDocs?.forEach(function (doc) {
-    appUsage.push({...doc.data(), id: doc.id});
+  const appointments = [];
+  appointmentsDocs?.forEach(function (doc) {
+    appointments.push(doc.data());
   });
-  return appUsage;
+  return appointments[0] || null;
+  //// console.log('All appointments are', appointments);
 };
 
-export const getVideoSentiments = async email => {
-  let videoSentimentsDocs = await firestore().collection('sentiments').get();
-  const videoSentiments = [];
-  videoSentimentsDocs?.forEach(function (doc) {
-    const docData = doc.data()[lowerCase(email)];
-    if (docData) {
-      videoSentiments.push({...docData});
-    }
-  });
-  return videoSentiments;
+export {addAppointment, getAppointment};
+
+export default {
+  addAppointment,
+  getAppointment
 };
