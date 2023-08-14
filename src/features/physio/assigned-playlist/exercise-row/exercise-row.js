@@ -1,10 +1,11 @@
 import React from 'react';
-import {Body, ListItem} from '@native-base';
-import {Text} from 'react-native';
+import {Box, Container, Text} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
 
-export const renderRow = (item, navigation) => {
+export const ExerciseRow = ({item}) => {
+  const navigation = useNavigation();
   return (
-    <ListItem
+    <Container
       noIndent
       onPress={() =>
         navigation.navigate('ExerciseDetail', {
@@ -12,8 +13,8 @@ export const renderRow = (item, navigation) => {
           item: item,
         })
       }>
-      <Body>
-        <Text style={{fontWeight: 'bold'}}>{item?.name}</Text>
+      <Box>
+        <Text bold>{item?.name}</Text>
         {item.reps || item.sets || item.hold ? (
           <Text note numberOfLines={1}>
             {item.reps ? `Reps ${item.reps}  ` : null}
@@ -21,7 +22,7 @@ export const renderRow = (item, navigation) => {
             {item.hold ? `Hold ${item.hold}  ` : null}
           </Text>
         ) : null}
-      </Body>
-    </ListItem>
+      </Box>
+    </Container>
   );
 };

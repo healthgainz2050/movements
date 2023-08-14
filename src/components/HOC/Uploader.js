@@ -1,14 +1,19 @@
 import React from 'react';
 import {Button, Text, View, ActivityIndicator, Platform} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import Permissions from 'react-native-permissions';
-import {storage, db} from './../Controllers/Firebase';
+// import Permissions from 'react-native-permissions';
 import uuid from 'uuid';
 import ProgressBar from './ProgressBar';
-import {Container, Body, Content, List, ListItem} from '@native-base';
+// import {Container, Body, Content, List, ListItem} from '@native-base';
 // import {createThumbnail} from 'react-native-create-thumbnail';
 // import * as Font from 'expo-font'
+import {getStorage, ref} from '@react-native-firebase/storage';
 
+// Get a reference to the storage service, which is used to create references in your storage bucket
+const storage = getStorage();
+
+// Create a storage reference from our storage service
+const storageRef = ref(storage);
 /*
 Uploader
 
@@ -24,7 +29,7 @@ Dynamically change Video / Photos etc.
  *
  */
 
-const ExampleUploader = (props) => {
+const ExampleUploader = props => {
   let statusText = '';
   if (props.status != '') {
     statusText = props.status == '100' ? 'Done!' : 'Uploading';
@@ -66,7 +71,7 @@ submitForm = async () => {
 
 // const withFilterProps = BaseComponent => ({ mediaType, side }) => {
 
-const uploaderWrapper = (WrappedComponent) => {
+const uploaderWrapper = WrappedComponent => {
   class HOC extends React.Component {
     state = {
       url: '',
@@ -97,7 +102,7 @@ const uploaderWrapper = (WrappedComponent) => {
     //     .catch((err) => // console.log({err}));
     // };
 
-    uploadImageAsync = async (uri) => {
+    uploadImageAsync = async uri => {
       this.setState({loading: true});
       const response = await fetch(uri);
       const blob = await response.blob();
@@ -107,20 +112,20 @@ const uploaderWrapper = (WrappedComponent) => {
 
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
+        snapshot => {
           let progress = (
             (snapshot.bytesTransferred / snapshot.totalBytes) *
             100
           ).toFixed(0);
           this.setState({status: progress});
         },
-        (error) => {
+        error => {
           // Handle unsuccessful uploads
         },
         () => {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
             // console.log('uploadTask', downloadURL);
             this.setState({url: downloadURL, completed: true});
             // use this to add to video list.
@@ -142,7 +147,7 @@ const uploaderWrapper = (WrappedComponent) => {
       }
     };
 
-    handleImagePicked = async (pickerResult) => {
+    handleImagePicked = async pickerResult => {
       try {
         // this.setState({ status: "starting upload" });
         this.setState({uploading: true});

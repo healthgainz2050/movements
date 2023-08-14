@@ -72,7 +72,11 @@
 	</array>
 	<key>NSCalendarsUsageDescription</key>
 	<string>This app requires access to the calendar</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need to access your camera to record video from camera.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>This app requires access to the contacts to send invites</string>
+	<string>Movements wants to access your contacts to show their work address in calendar locations suggestions.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need to access your library to upload video from library.</string>
 </dict>
 </plist>

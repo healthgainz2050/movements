@@ -2191,10 +2191,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-18.2.0.tgz#bd02c4afedbb986c55892ca4abb6e03d626a8f43"
   integrity sha512-URLtCYtzdahjEBDD7qXWr93V6evdxsF2L0fBusKd5t+l4OfPzcZ69iwmn2pZs35pIAsOyjFwQ4CwIvIstMxTQA==
 
-"@react-native-firebase/storage@^18.2.0":
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-18.2.0.tgz#3596689f3ad5092ffc2b346e4034a11383eda7dd"
-  integrity sha512-KUlQbFTfL7JZ6q+iRNzVUcvZAl5feE5aX+BC8gAmZ+5i14RKbslT8kTbeZdZYwEoCMCzK0Rab46UAVhP+3Py/w==
+"@react-native-firebase/storage@^18.3.0":
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-18.3.0.tgz#d30624d45779ef57985dad8755e5ba67b257a13a"
+  integrity sha512-4tMxu1364yH+hPSObEs18cMPGg7h0y7QynVfArvuK8lRNkpafeVAgYa8x0xp80LXUjMWXiN4OmmGpyy/CYH2lg==
 
 "@react-native-google-signin/google-signin@^10.0.1":
   version "10.0.1"
@@ -6778,6 +6778,11 @@ react-native-html-to-pdf@^0.12.0:
   resolved "https://registry.yarnpkg.com/react-native-html-to-pdf/-/react-native-html-to-pdf-0.12.0.tgz#2b467296f85c9c9783a7288b19722a7028dcbcb8"
   integrity sha512-Yb5WO9SfF86s5Yv9PqXQ7fZDr9zZOJ+6jtweT9zFLraPNHWX7pSxe2dSkeg3cGiNrib65ZXGN6ksHymfYLFSSg==
 
+react-native-image-crop-picker@^0.40.0:
+  version "0.40.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.40.0.tgz#cf378a4cbdb64b9b6ff94399b8515ff3bdccbf9c"
+  integrity sha512-FpqiCS4CiPQp8qIorlELWKbpi1d9lyhJki9spZr4LShv9hk65GWo6tYJupfTV19o5XcRwJn8d4MHIUoyWMJRTQ==
+
 react-native-mail@^6.1.1:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/react-native-mail/-/react-native-mail-6.1.1.tgz#f1b1f8034c84d2510a93e4a2a795f0db5a13595e"
@@ -7766,6 +7771,11 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 v8-to-istanbul@^9.0.1:
   version "9.1.0"

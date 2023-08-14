@@ -20,6 +20,13 @@ import {PhysioHome} from '../features/physio';
 import {AddPatient} from '../features/physio/patients/add-patient';
 import {UsageAnalytics} from '../features/physio/patients/analysis';
 import {EditPatient} from '../features/physio/patients/edit-patient';
+// //list of exercises
+import {AssignedPlaylist} from '../features/physio/assigned-playlist';
+// //detail of exercise
+// import ExerciseDetail from '../features/physio/exercises/exercise-detail';
+// import AddExercise from '../features/physio/exercises/add-exercise';
+// import AddVideo from '../features/physio/exercises/add-video';
+
 /**Context */
 import GlobalContext from '../services/context/globalContext';
 
@@ -157,6 +164,43 @@ export const RootNavigation = () => {
                 presentation: 'modal',
               }}
             />
+            <Stack.Screen
+              name="AssignedPlaylist"
+              component={AssignedPlaylist}
+              options={{
+                headerTitle: 'Playlist',
+                // headerShown: false,
+                // presentation: 'modal',
+              }}
+            />
+            {/* 
+            <Stack.Screen
+              name="ExerciseDetail"
+              component={ExerciseDetail}
+              options={{
+                headerTitle: 'ExerciseDetail',
+                headerShown: false,
+                // presentation: 'modal',
+              }}
+            />{' '}
+            <Stack.Screen
+              name="AddExercise"
+              component={AddExercise}
+              options={{
+                headerTitle: 'AddExercise',
+                headerShown: false,
+                presentation: 'modal',
+              }}
+            />
+            <Stack.Screen
+              name="AddVideo"
+              component={AddVideo}
+              options={{
+                headerTitle: 'AddVideo',
+                headerShown: false,
+                presentation: 'modal',
+              }}
+            /> */}
           </>
         ) : (
           <Stack.Screen

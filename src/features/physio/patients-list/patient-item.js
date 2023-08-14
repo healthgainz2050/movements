@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {Text, Box, Heading} from 'native-base';
-import {Alert} from 'react-native';
+import {Alert, TouchableOpacity} from 'react-native';
 import Swipeout from 'rc-swipeout';
 import moment from 'moment';
 import RNCalendarEvents from 'react-native-calendar-events';
@@ -143,19 +143,21 @@ export const PatientItem = ({
           item={item}
         />
       ) : null}
-      <Box
+      <TouchableOpacity
         onPress={() => {
           context.updateState({selectedPatient: item});
-          navigation.navigate('Exercises', {
+          navigation.navigate('AssignedPlaylist', {
             name: item?.name,
             item,
           });
         }}>
-        <Heading color="#fff" size="sm" p="5">
-          {item?.name}
-        </Heading>
-        <AnimatedBounce />
-      </Box>
+        <Box>
+          <Heading color="#fff" size="sm" p="5">
+            {item?.name}
+          </Heading>
+          <AnimatedBounce />
+        </Box>
+      </TouchableOpacity>
     </Swipeout>
   );
 };
