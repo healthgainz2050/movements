@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Center, Container} from 'native-base';
 import {ActivityIndicator, Text} from 'react-native';
-import {VideoPlayer} from '../../../../components/video-player';
+import {VideoPlayer} from '../../../../../components/video-player';
 import {setupListener} from './actions';
 
 function ExerciseDetailView(props) {

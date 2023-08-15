@@ -1,11 +1,13 @@
 import React from 'react';
-import {ExerciseItem} from '../../../../Components/exercise-item';
+import {ExerciseItem} from '../../../../../components/exercise-item';
+import {useNavigation} from '@react-navigation/native';
 
-export const exerciseListItem = (state, navigation, setState, item) => {
+export const ExerciseListItem = (state, setState, item) => {
   const sets = item?.sets ? `${item?.sets} Sets ` : '';
   const reps = item?.reps ? `${item?.reps} Reps ` : '';
   const hold = item?.hold ? `${item?.hold} hold ` : '';
 
+  const navigation = useNavigation();
   const subtitle = `${sets}${reps}${hold}`;
   const {selectedExercises} = state;
   console.log('exercise item is', item);
@@ -24,7 +26,7 @@ export const exerciseListItem = (state, navigation, setState, item) => {
         let updatedExercises = null;
         if (isChecked) {
           updatedExercises = selectedExercises.filter(
-            (itemId) => itemId !== item.id,
+            itemId => itemId !== item.id,
           );
         } else {
           if (item?.id) {
@@ -33,7 +35,6 @@ export const exerciseListItem = (state, navigation, setState, item) => {
           }
         }
         setState({...state, selectedExercises: updatedExercises});
-      
       }}
       isChecked={isChecked}
       isCheckbox

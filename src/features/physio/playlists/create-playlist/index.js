@@ -1,1 +1,1 @@
-export {CreatePlaylist} from './CreatePlaylist';
+export {CreatePlaylist} from './create-playlist';

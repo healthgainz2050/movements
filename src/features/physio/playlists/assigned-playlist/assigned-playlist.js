@@ -1,13 +1,13 @@
 import React, {useEffect, useContext, useState} from 'react';
 import {Box, FlatList, Container} from 'native-base';
 import {Text} from 'react-native';
-import {sendEmail} from '../../../utils';
-import GlobalContext from '../../../services/context/globalContext';
+import {sendEmail} from '../../../../utils';
+import GlobalContext from '../../../../services/context/globalContext';
 import {styles} from './styles';
 import {ExerciseRow} from './exercise-row';
-import {getPatientUser} from '../../../services/firebase';
-import {lowerCase} from '../../../utils';
-import {NBButton} from '../../../components/nb-button';
+import {getPatientUser} from '../../../../services/firebase';
+import {lowerCase} from '../../../../utils';
+import {NBButton} from '../../../../components/nb-button';
 
 export const AssignedPlaylist = ({route, navigation}) => {
   const context = useContext(GlobalContext);
@@ -41,7 +41,7 @@ export const AssignedPlaylist = ({route, navigation}) => {
       {playlist && (
         <NBButton
           label="Change Playlist"
-          onPress={() => navigation.navigate('Playlists', {data: data})}
+          onPress={() => navigation.navigate('PlaylistList', {data: data})}
           mt={5}
         />
       )}
@@ -57,7 +57,7 @@ export const AssignedPlaylist = ({route, navigation}) => {
         {!playlist ? (
           <NBButton
             label="Assign a Playlist"
-            onPress={() => navigation.navigate('Playlists', {data: null})}
+            onPress={() => navigation.navigate('PlaylistList', {data: null})}
             mt={10}
           />
         ) : null}

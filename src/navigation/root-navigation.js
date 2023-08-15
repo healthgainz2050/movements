@@ -21,7 +21,9 @@ import {AddPatient} from '../features/physio/patients/add-patient';
 import {UsageAnalytics} from '../features/physio/patients/analysis';
 import {EditPatient} from '../features/physio/patients/edit-patient';
 // //list of exercises
-import {AssignedPlaylist} from '../features/physio/assigned-playlist';
+import {AssignedPlaylist} from '../features/physio/playlists/assigned-playlist';
+import {PlaylistList} from '../features/physio/playlists/playlist-list';
+import {CreatePlaylist} from '../features/physio/playlists/create-playlist';
 // //detail of exercise
 // import ExerciseDetail from '../features/physio/exercises/exercise-detail';
 // import AddExercise from '../features/physio/exercises/add-exercise';
@@ -168,11 +170,38 @@ export const RootNavigation = () => {
               name="AssignedPlaylist"
               component={AssignedPlaylist}
               options={{
-                headerTitle: 'Playlist',
+                headerTitle: 'Active Playlist',
                 // headerShown: false,
                 // presentation: 'modal',
               }}
             />
+            <Stack.Screen
+              name="PlaylistList"
+              component={PlaylistList}
+              options={{
+                headerTitle: 'Playlists',
+                // headerShown: false,
+                // presentation: 'modal',
+              }}
+            />
+            <Stack.Screen
+              name="CreatePlaylist"
+              component={CreatePlaylist}
+              options={{
+                headerTitle: 'Create Playlist',
+                // headerShown: false,
+                // presentation: 'modal',
+              }}
+            />
+            {/* <Stack.Screen
+              name="AddExercise"
+              component={AddExercise}
+              options={{
+                headerTitle: 'Add Exercise',
+                // headerShown: false,
+                // presentation: 'modal',
+              }}
+            /> */}
             {/* 
             <Stack.Screen
               name="ExerciseDetail"

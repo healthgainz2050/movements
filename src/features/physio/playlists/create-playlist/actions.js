@@ -1,14 +1,17 @@
-import {getAllExercises} from '../../../Services/playlist';
+import {
+  getAllExercises,
+  getAllPlaylists,
+  createPlaylist,
+} from '../../../../services/firebase';
 import Toast from 'react-native-toast-message';
-import {getAllPlaylists, createPlaylist} from '../../../Services/playlist';
-import {generateUUID} from '../../../utils/uuid-generator';
-import {lowerCase} from '../../../utils';
+import {generateUUID} from '../../../../utils/uuid-generator';
+import {lowerCase} from '../../../../utils';
 
 export const fetchExercise = async (context, setState, state) => {
   try {
     const createdBy = context?.user?.email;
     const allExercises = await getAllExercises(createdBy);
-   
+
     setState({...state, allExercises});
     context.updateState({allExercises});
   } catch (error) {
@@ -42,7 +45,7 @@ export const onCreatePlaylist = async (
     return;
   }
   const selectedPlaylistItems = [];
-  allExercises.forEach((item) => {
+  allExercises.forEach(item => {
     if (selectedExercises.indexOf(item.id) !== -1) {
       selectedPlaylistItems.push(item);
     }
