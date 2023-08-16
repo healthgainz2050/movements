@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Container, Center, FlatList, Text, Box} from 'native-base';
+import {Container, FlatList, Text, Box} from 'native-base';
 import GlobalContext from '../../../../services/context/globalContext';
 import {PlaylistRow} from './playlist-row';
 import {NBButton} from '../../../../components/nb-button';
@@ -24,33 +24,9 @@ export const PlaylistList = ({navigation}) => {
       {playlists && (
         <FlatList
           data={playlists}
-          renderItem={item => <PlaylistRow item={item} />}
+          renderItem={({item}) => <PlaylistRow item={item} />}
         />
       )}
     </Container>
   );
 };
-
-// Playlists.navigationOptions = ({navigation}) => {
-//   return {
-//     headerTitle: () => <HeaderTitle title={'Playlists'} />,
-//     // headerRight: () => (
-//     //   <Button
-//     //     transparent
-//     //     title='Create Playlist'
-//     //     onPress={() => navigation.navigate('CreatePlaylists', {data: null})}>
-//     //     <Text style={{color: '#3D9DF2'}}>Create Playlist</Text>
-//     //   </Button>
-//     // ),
-//     headerRight: () => <Cone />,
-//     headerLeft: () => {
-//       return (
-//         <HeaderBackButton
-//           onPress={() => navigation.goBack()}
-//           label={'Back'}
-//           backTitleVisible={Platform.OS == 'ios' ? true : false}
-//         />
-//       );
-//     },
-//   };
-// };

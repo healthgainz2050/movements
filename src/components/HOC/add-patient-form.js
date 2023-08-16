@@ -19,7 +19,7 @@ export const PostFormData = path => WrappedComponent => {
       try {
         let data = this.state;
         data.physioEmail = lowerCase(auth().currentUser.email);
-        let docRef = await firestore().collection(path).add(data); // // console.log("submitted", docRef.id);
+        let docRef = await firestore().collection(path).add(data);
         this.setState({submitted: docRef.id});
         this.props.navigation.goBack();
       } catch (error) {

@@ -1,10 +1,11 @@
 import React, {useCallback} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {Text, Pressable, Box} from 'native-base';
 import YoutubeIframe from '../youtube-iframe';
 import {VideoPlayerNative} from '../video-player-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import {getYouTubeVideoId, getGDriveVideoUrl} from '../../utils';
-// import {WebView} from 'react-native-webview';
+import {WebView} from 'react-native-webview';
 import {styles} from './styles';
 import {props, defaultProps} from './props';
 
@@ -29,13 +30,12 @@ export const VideoPlayer = ({uri, onPressSelectVideo, onEndVideo}) => {
       );
     } else if (gdriveVideoURL) {
       return (
-        // <WebView
-        //   source={{
-        //     html: gdriveVideoURL,
-        //   }}
-        //   style={styles.webView}
-        // />
-        <View />
+        <WebView
+          source={{
+            html: gdriveVideoURL,
+          }}
+          style={styles.webView}
+        />
       );
     }
     return <VideoPlayerNative uri={uri} onEndVideo={onEndVideoHandler} />;
@@ -44,14 +44,14 @@ export const VideoPlayer = ({uri, onPressSelectVideo, onEndVideo}) => {
     return <React.Fragment>{renderVideoPlayer()}</React.Fragment>;
   } else {
     return (
-      <View style={styles.video}>
-        <TouchableOpacity
+      <Box style={styles.video} mb="5">
+        <Pressable
           style={styles.videoSelectionButton}
           onPress={onPressSelectVideo}>
-          <Ionicons name="md-film" size={32} color="grey" />
-          <Text>Select Video</Text>
-        </TouchableOpacity>
-      </View>
+          <MaterialIcons name={'movie'} size={32} color={'black'} />
+          <Text p="2">Select Video</Text>
+        </Pressable>
+      </Box>
     );
   }
 };

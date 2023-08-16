@@ -7,7 +7,6 @@ export default function YoutubePlayerI({videoId, onEndVideo, videoUri}) {
 
   const onStateChange = useCallback(
     state => {
-      console.log('player current state', state, videoUri);
       if (state === 'ended') {
         setPlaying(false);
         onEndVideo(videoUri);

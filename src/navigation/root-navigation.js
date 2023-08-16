@@ -24,49 +24,15 @@ import {EditPatient} from '../features/physio/patients/edit-patient';
 import {AssignedPlaylist} from '../features/physio/playlists/assigned-playlist';
 import {PlaylistList} from '../features/physio/playlists/playlist-list';
 import {CreatePlaylist} from '../features/physio/playlists/create-playlist';
-// //detail of exercise
-// import ExerciseDetail from '../features/physio/exercises/exercise-detail';
-// import AddExercise from '../features/physio/exercises/add-exercise';
-// import AddVideo from '../features/physio/exercises/add-video';
+import {AddExercise} from '../features/physio/exercises/add-exercise';
+import {ExerciseDetail} from '../features/physio/exercises/exercise-detail';
 
 /**Context */
 import GlobalContext from '../services/context/globalContext';
+import {AddVideo} from '../features/physio/exercises/add-video';
+import {PlayListDetail} from '../features/physio/playlists/playlist-detail';
 
 const Stack = createNativeStackNavigator();
-
-function HomeScreen({route, navigation}) {
-  return (
-    <View>
-      <Text>Signed in!</Text>
-      <Button
-        title="Sign out"
-        onPress={() => {
-          auth()
-            .signOut()
-            .then(() => console.log('User signed out!'));
-        }}
-      />
-      <Button title="update profile" onPress={() => {}} />
-    </View>
-  );
-}
-
-function HomeScreenPhysio({route, navigation}) {
-  return (
-    <View>
-      <Text>Signed in Physio!</Text>
-      <Button
-        title="Sign out"
-        onPress={() => {
-          auth()
-            .signOut()
-            .then(() => console.log('User signed out!'));
-        }}
-      />
-      <Button title="update profile" onPress={() => {}} />
-    </View>
-  );
-}
 
 export const RootNavigation = () => {
   const context = useContext(GlobalContext);
@@ -145,7 +111,6 @@ export const RootNavigation = () => {
               options={{
                 headerTitle: 'Add Client',
                 headerShown: false,
-                // headerLeft: () => <SignOutButton />,
                 presentation: 'modal',
               }}
             />
@@ -154,7 +119,6 @@ export const RootNavigation = () => {
               component={UsageAnalytics}
               options={{
                 headerTitle: 'App Usage',
-                // headerShown: false,
               }}
             />
             <Stack.Screen
@@ -171,8 +135,6 @@ export const RootNavigation = () => {
               component={AssignedPlaylist}
               options={{
                 headerTitle: 'Active Playlist',
-                // headerShown: false,
-                // presentation: 'modal',
               }}
             />
             <Stack.Screen
@@ -180,8 +142,6 @@ export const RootNavigation = () => {
               component={PlaylistList}
               options={{
                 headerTitle: 'Playlists',
-                // headerShown: false,
-                // presentation: 'modal',
               }}
             />
             <Stack.Screen
@@ -189,47 +149,41 @@ export const RootNavigation = () => {
               component={CreatePlaylist}
               options={{
                 headerTitle: 'Create Playlist',
-                // headerShown: false,
-                // presentation: 'modal',
               }}
             />
-            {/* <Stack.Screen
-              name="AddExercise"
-              component={AddExercise}
-              options={{
-                headerTitle: 'Add Exercise',
-                // headerShown: false,
-                // presentation: 'modal',
-              }}
-            /> */}
-            {/* 
             <Stack.Screen
               name="ExerciseDetail"
               component={ExerciseDetail}
               options={{
-                headerTitle: 'ExerciseDetail',
-                headerShown: false,
-                // presentation: 'modal',
+                headerTitle: 'Exercise Detail',
               }}
-            />{' '}
+            />
             <Stack.Screen
               name="AddExercise"
               component={AddExercise}
               options={{
-                headerTitle: 'AddExercise',
+                headerTitle: 'Add Exercise',
+                headerShown: false,
+                presentation: 'modal',
+              }}
+            />
+
+            <Stack.Screen
+              name="AddVideo"
+              component={AddVideo}
+              options={{
+                headerTitle: 'Add Video',
                 headerShown: false,
                 presentation: 'modal',
               }}
             />
             <Stack.Screen
-              name="AddVideo"
-              component={AddVideo}
+              name="PlayListDetail"
+              component={PlayListDetail}
               options={{
-                headerTitle: 'AddVideo',
-                headerShown: false,
-                presentation: 'modal',
+                headerTitle: 'Playlist Detail',
               }}
-            /> */}
+            />
           </>
         ) : (
           <Stack.Screen

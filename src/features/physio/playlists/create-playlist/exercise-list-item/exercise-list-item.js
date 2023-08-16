@@ -2,7 +2,7 @@ import React from 'react';
 import {ExerciseItem} from '../../../../../components/exercise-item';
 import {useNavigation} from '@react-navigation/native';
 
-export const ExerciseListItem = (state, setState, item) => {
+export const ExerciseListItem = ({state, setState, item}) => {
   const sets = item?.sets ? `${item?.sets} Sets ` : '';
   const reps = item?.reps ? `${item?.reps} Reps ` : '';
   const hold = item?.hold ? `${item?.hold} hold ` : '';
@@ -10,7 +10,6 @@ export const ExerciseListItem = (state, setState, item) => {
   const navigation = useNavigation();
   const subtitle = `${sets}${reps}${hold}`;
   const {selectedExercises} = state;
-  console.log('exercise item is', item);
   const isChecked = selectedExercises?.indexOf(item?.id) !== -1;
   return (
     <ExerciseItem

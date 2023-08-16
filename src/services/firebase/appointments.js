@@ -48,7 +48,6 @@ const getAppointment = async createdFor => {
     appointments.push(doc.data());
   });
   return appointments[0] || null;
-  //// console.log('All appointments are', appointments);
 };
 
 export {addAppointment, getAppointment};

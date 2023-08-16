@@ -15,7 +15,7 @@ export const fetchExercise = async (context, setState, state) => {
     setState({...state, allExercises});
     context.updateState({allExercises});
   } catch (error) {
-    console.log('@@@ fetchExercise error', error);
+    console.log('fetchExercise error', error);
   }
 };
 

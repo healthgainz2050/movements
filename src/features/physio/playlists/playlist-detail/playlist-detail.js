@@ -1,9 +1,13 @@
 import React from 'react';
 import {FlatList, Container, Text} from 'native-base';
 import {ExerciseItem} from '../../../../components/exercise-item';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-export const PlayListDetail = ({navigation}) => {
-  const exerciseListItem = item => {
+export const PlayListDetail = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+
+  const exerciseListItem = ({item}) => {
     const sets = item?.sets ? `${item?.sets} Sets ` : '';
     const reps = item?.reps ? `${item?.reps} Reps ` : '';
     const hold = item?.hold ? `${item?.hold} hold ` : '';
@@ -17,36 +21,19 @@ export const PlayListDetail = ({navigation}) => {
             item: item,
           })
         }
+        variant="full"
         title={item?.name}
         subtitle={subtitle}
       />
     );
   };
 
-  const playlist = navigation.getParam('playlist');
+  const {playlist} = route.params;
   const {exercises} = playlist;
   return (
-    <Container>
-      <Text>Exercises ({exercises?.length})</Text>
-      <FlatList data={exercises} render={exerciseListItem} />
+    <Container maxWidth="100%" p="5">
+      <Text mb="2">Exercises ({exercises?.length})</Text>
+      <FlatList data={exercises} renderItem={exerciseListItem} />
     </Container>
   );
 };
-
-// PlayListDetail.navigationOptions = ({navigation}) => {
-//   return {
-//     headerTitle: () => (
-//       <HeaderTitle title={navigation?.state?.params?.playlist?.playlistName} />
-//     ),
-//     headerLeft: () => {
-//       return (
-//         <HeaderBackButton
-//           onPress={() => navigation.goBack()}
-//           label={'Back'}
-//           backTitleVisible={Platform.OS == 'ios' ? true : false}
-//         />
-//       );
-//     },
-//     headerRight: () => <Cone />,
-//   };
-// };

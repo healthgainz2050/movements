@@ -38,7 +38,6 @@ export const PatientItem = ({
   const playlist = playlists?.filter(
     playlist => playlist.id === item?.playlistId,
   )[0];
-  console.log('@@ item', item);
   const [modalVisible, setModalVisible] = useState(false);
 
   const addToCalendar = async () => {

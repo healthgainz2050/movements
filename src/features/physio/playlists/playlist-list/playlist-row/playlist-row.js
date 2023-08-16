@@ -1,14 +1,13 @@
 import React, {useContext} from 'react';
-import {Box, Button} from 'native-base';
-import {Text} from 'react-native';
+import {Button, Text, Flex, Pressable} from 'native-base';
 import {assignPlaylistToPatient} from '../../../../../services/firebase';
 import GlobalContext from '../../../../../services/context/globalContext';
 import {useNavigation} from '@react-navigation/native';
 
 export const PlaylistRow = ({item}) => {
+  const context = useContext(GlobalContext);
   const patient = context.selectedPatient;
   const isAssigned = patient.playlistId === item.id;
-  const context = useContext(GlobalContext);
   const navigation = useNavigation();
 
   const updatePlaylistId = async (patientEmail, playlistId) => {
@@ -27,23 +26,32 @@ export const PlaylistRow = ({item}) => {
     });
   };
   return (
-    <Box
-      noIndent
+    <Pressable
       onPress={() => {
         navigation.navigate('PlayListDetail', {
           playlist: item,
         });
       }}>
-      <Text>{item.playlistName}</Text>
-
-      <Button
-        onPress={() => updatePlaylistId(patient.patientEmail, item.id)}
-        disabled={!!isAssigned}
-        transparent>
-        <Text style={{color: isAssigned ? 'grey' : '#3D9DF2'}}>
-          {isAssigned ? 'Assigned' : 'Assign'}
-        </Text>
-      </Button>
-    </Box>
+      <Flex
+        width="100%"
+        p="2"
+        direction="row"
+        maxWidth="100%"
+        bg="primary.100"
+        justifyContent={'space-between'}
+        alignItems="center"
+        rounded="2">
+        <Text width="70%">{item.playlistName}</Text>
+        <Button
+          size="sm"
+          variant="link"
+          onPress={() => updatePlaylistId(patient.patientEmail, item.id)}
+          disabled={isAssigned}>
+          <Text color={!isAssigned ? '#007aff' : '#808080'}>
+            {isAssigned ? 'Assigned' : 'Assign'}
+          </Text>
+        </Button>
+      </Flex>
+    </Pressable>
   );
 };

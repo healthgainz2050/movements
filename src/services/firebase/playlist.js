@@ -65,7 +65,7 @@ const assignPlaylistToPatient = async (patientEmail, playlistId) => {
         });
       });
   } catch (error) {
-    console.log('@@@ error in updating playlist id', error);
+    console.log('error in updating playlist id', error);
   }
 
   await firestore()
