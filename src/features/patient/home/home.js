@@ -138,7 +138,7 @@ export const Home = () => {
           </Box>
         ) : (
           <View style={styles.row}>
-            <Heading size="l" mh="10">
+            <Heading size="lg" mh="10">
               You don't have any exercise at the moment please contact to your
               admin
             </Heading>

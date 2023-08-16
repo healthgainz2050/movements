@@ -22,7 +22,9 @@ export const SwipeableItem = ({onPress, title, iconProps, style}) => ({
           color={'#fff'}
         />
       )}
-      <Text size="l" bold color="#fff">{title}</Text>
+      <Text fontSize="xs" pt="1" bold color="#fff">
+        {title}
+      </Text>
     </View>
   ),
   onPress,
