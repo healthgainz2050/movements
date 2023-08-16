@@ -56,7 +56,6 @@ export const calculateSentiments = async (
     videoSentiments?.map((item, index) => {
       sentimentalValues[item?.sentiment].population += 1;
     });
-    console.log('@@@ sentiments are', Object.values(sentimentalValues));
     setSentiments(Object.values(sentimentalValues));
     setIsLoading(false);
   } catch (error) {

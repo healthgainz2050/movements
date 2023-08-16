@@ -1,2 +1,1 @@
-import AddVideo from './AddVideo';
-export default AddVideo;
+export {AddVideo} from './add-video';

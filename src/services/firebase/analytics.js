@@ -20,7 +20,7 @@ export const addSentimentToExercise = async (
     var sentimentRef = firestore().collection('/sentiments/').doc(exerciseId);
     await sentimentRef.set(data, {merge: true});
   } catch (error) {
-    console.log('@@@ error in writing sentiments', error);
+    console.log('error in writing sentiments', error);
   }
 };
 
@@ -33,7 +33,6 @@ export const reportAppUsageTime = async (userId, email, startTime, usage) => {
       .get();
     let previousUsage = 0;
     usageDocs?.forEach((doc, index) => {
-      console.log('doc id is', doc.data()[startTimeKey]);
       if (doc?.data()[startTimeKey]) {
         previousUsage = doc?.data()[startTimeKey]?.usage;
       }
@@ -48,7 +47,7 @@ export const reportAppUsageTime = async (userId, email, startTime, usage) => {
       .doc(userId)
       .set(data, {merge: true});
   } catch (error) {
-    console.log('@@@ error in writing app usage time', error);
+    console.log('error in writing app usage time', error);
   }
 };
 

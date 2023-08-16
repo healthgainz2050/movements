@@ -1,5 +1,5 @@
 import React from 'react';
-const utcDateToString = (momentInUTC) => {
+const utcDateToString = momentInUTC => {
   let s = moment.utc(momentInUTC).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
   return s;
 };
@@ -24,7 +24,6 @@ export const fetchPatient = async (user, setState, state, context) => {
   const playlists = await getAllPlaylists(user.email);
   const appUrls = await fetchAppUrls();
   context.updateState({patients, playlists, appUrls});
-  console.log('@@@ latest context', appUrls);
   setState({patientList: patients, isLoading: false, appUrls});
 };
 
@@ -33,7 +32,7 @@ export const deletePatient = async (item, user, setState, state, context) => {
     .collection('patients')
     .where('patientEmail', '==', item.patientEmail)
     .get()
-    .then((docs) => {
+    .then(docs => {
       docs.forEach(function (doc) {
         doc.ref.delete();
       });
@@ -42,7 +41,7 @@ export const deletePatient = async (item, user, setState, state, context) => {
     .collection('exercises')
     .where('patientEmail', '==', item.patientEmail)
     .get()
-    .then((docs) => {
+    .then(docs => {
       docs.forEach(function (doc) {
         doc.ref.delete();
       });
@@ -50,7 +49,7 @@ export const deletePatient = async (item, user, setState, state, context) => {
   syncPatients(user, setState, state, context);
 };
 
-export const addToCalendar = (item) => {
+export const addToCalendar = item => {
   const eventConfig = {
     title: 'Appointment',
     startDate: utcDateToString(nowUTC),
@@ -59,7 +58,7 @@ export const addToCalendar = (item) => {
   };
 
   AddCalendarEvent.presentEventCreatingDialog(eventConfig)
-    .then(async (eventInfo) => {
+    .then(async eventInfo => {
       if (eventInfo.action === 'SAVED') {
         const eventInfoX = await RNCalendarEvents.findEventById(
           eventInfo?.calendarItemIdentifier,
@@ -72,12 +71,12 @@ export const addToCalendar = (item) => {
         addAppointmentToDatabase(appointment);
       }
     })
-    .catch((error) => {
+    .catch(error => {
       console.warn(error);
     });
 };
 
-export const addAppointmentToDatabase = (appointment) => {
+export const addAppointmentToDatabase = appointment => {
   db.collection('appointments')
     .add(appointment)
     .then(function (res) {})
@@ -158,18 +157,22 @@ export const isSwipeout = (
         </View>
       ),
       onPress: () => {
-        Alert.alert('Delete', `Are you sure to delete client profile ${item?.name}`, [
-          {
-            text: 'Yes',
-            onPress: () => {
-              deletePatient(item, user, setState, state, context);
+        Alert.alert(
+          'Delete',
+          `Are you sure to delete client profile ${item?.name}`,
+          [
+            {
+              text: 'Yes',
+              onPress: () => {
+                deletePatient(item, user, setState, state, context);
+              },
             },
-          },
-          {
-            text: 'No',
-            style: 'cancel',
-          },
-        ]);
+            {
+              text: 'No',
+              style: 'cancel',
+            },
+          ],
+        );
         context.updateState({activePatient: null});
       },
     },

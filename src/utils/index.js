@@ -19,13 +19,14 @@ export const onShare = async () => {
   }
 };
 
-export const getYouTubeVideoId = (uri) => {
-  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+export const getYouTubeVideoId = uri => {
+  var regExp =
+    /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
   var match = uri?.match(regExp);
   return match && match[7].length === 11 ? match[7] : false;
 };
 
-export const getGDriveVideoUrl = (uri) => {
+export const getGDriveVideoUrl = uri => {
   if (uri?.indexOf('drive.google.com') !== -1) {
     const updatedUri = uri?.replace('view?usp=sharing', 'preview');
     return `<iframe width="100%" height="100%" allow="autoplay" src="${updatedUri}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
@@ -33,7 +34,7 @@ export const getGDriveVideoUrl = (uri) => {
   return null;
 };
 
-export const lowerCase = (str) => {
+export const lowerCase = str => {
   return str?.toLowerCase();
 };
 
@@ -43,11 +44,11 @@ export const windowHeight = Dimensions.get('window').height;
 export const sendEmail = async (to, from, appUrls) => {
   const body = `Dear ${to.name}!${'\n\n'}${
     from.displayName
-  } has invited you to use Healthgainz to collaborate with them.${'\n'}Use the links below to install the application.${'\n\n'}Google Play Store: ${
+  } has invited you to use Movements to collaborate with them.${'\n'}Use the links below to install the application.${'\n\n'}Google Play Store: ${
     appUrls.android
   }${'\n\n'}Apple App Store: ${appUrls.ios}${'\n\n'}
   `;
-  const subject = `Invitation to use Healthgainz to collaborate with ${from.displayName}`;
+  const subject = `Invitation to use Movements to collaborate with ${from.displayName}`;
   let url = `mailto:${to.patientEmail}?subject=${subject}&body=${body}`;
   // check if we can use this link
   const canOpen = await Linking.canOpenURL(url);

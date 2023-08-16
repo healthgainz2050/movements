@@ -1,2 +1,1 @@
-import ExerciseDetail from './ExerciseDetail';
-export default ExerciseDetail;
+export {ExerciseDetail} from './exercise-detail';

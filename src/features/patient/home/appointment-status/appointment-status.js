@@ -34,7 +34,7 @@ export const AppointmentStatus = ({user}) => {
     if (isLoadingAppointment) {
       return (
         <View style={styles.row}>
-          <Heading size="l" mh="10">
+          <Heading size="lg" mh="10">
             Checking for appointment...
           </Heading>
         </View>
@@ -50,7 +50,7 @@ export const AppointmentStatus = ({user}) => {
           ]}>
           <Ionicons name="md-calendar" size={40} color={'#2eaeec'} />
           <View style={{justifyContent: 'center'}}>
-            <Heading size="l" mh="10">
+            <Heading size="lg" mh="10">
               Next appointment at:
             </Heading>
             <Center>
@@ -67,7 +67,7 @@ export const AppointmentStatus = ({user}) => {
     } else {
       return (
         <View style={styles.row}>
-          <Heading size="l" mh="10">
+          <Heading size="lg" mh="10">
             You don't have any appointment at the moment
           </Heading>
         </View>

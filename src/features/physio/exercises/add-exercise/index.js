@@ -1,2 +1,1 @@
-import AddExerciseFormView from './AddExercise';
-export default AddExerciseFormView;
+export {AddExercise} from './add-exercise';

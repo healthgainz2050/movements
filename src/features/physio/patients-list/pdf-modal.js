@@ -68,7 +68,7 @@ const App = ({isVisible, closeModal, item}) => {
     try {
       await FileViewer.open(filePath);
     } catch (error) {
-      console.log('@@@ error in opening file', error);
+      console.log('error in opening file', error);
     }
     // closeModal(!isVisible);
   };

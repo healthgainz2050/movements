@@ -1,1 +1,1 @@
-export * from './patients-list';
+export {PhysioHome} from './patients-list';

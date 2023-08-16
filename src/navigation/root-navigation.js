@@ -20,44 +20,19 @@ import {PhysioHome} from '../features/physio';
 import {AddPatient} from '../features/physio/patients/add-patient';
 import {UsageAnalytics} from '../features/physio/patients/analysis';
 import {EditPatient} from '../features/physio/patients/edit-patient';
+// //list of exercises
+import {AssignedPlaylist} from '../features/physio/playlists/assigned-playlist';
+import {PlaylistList} from '../features/physio/playlists/playlist-list';
+import {CreatePlaylist} from '../features/physio/playlists/create-playlist';
+import {AddExercise} from '../features/physio/exercises/add-exercise';
+import {ExerciseDetail} from '../features/physio/exercises/exercise-detail';
+
 /**Context */
 import GlobalContext from '../services/context/globalContext';
+import {AddVideo} from '../features/physio/exercises/add-video';
+import {PlayListDetail} from '../features/physio/playlists/playlist-detail';
 
 const Stack = createNativeStackNavigator();
-
-function HomeScreen({route, navigation}) {
-  return (
-    <View>
-      <Text>Signed in!</Text>
-      <Button
-        title="Sign out"
-        onPress={() => {
-          auth()
-            .signOut()
-            .then(() => console.log('User signed out!'));
-        }}
-      />
-      <Button title="update profile" onPress={() => {}} />
-    </View>
-  );
-}
-
-function HomeScreenPhysio({route, navigation}) {
-  return (
-    <View>
-      <Text>Signed in Physio!</Text>
-      <Button
-        title="Sign out"
-        onPress={() => {
-          auth()
-            .signOut()
-            .then(() => console.log('User signed out!'));
-        }}
-      />
-      <Button title="update profile" onPress={() => {}} />
-    </View>
-  );
-}
 
 export const RootNavigation = () => {
   const context = useContext(GlobalContext);
@@ -136,7 +111,6 @@ export const RootNavigation = () => {
               options={{
                 headerTitle: 'Add Client',
                 headerShown: false,
-                // headerLeft: () => <SignOutButton />,
                 presentation: 'modal',
               }}
             />
@@ -145,7 +119,6 @@ export const RootNavigation = () => {
               component={UsageAnalytics}
               options={{
                 headerTitle: 'App Usage',
-                // headerShown: false,
               }}
             />
             <Stack.Screen
@@ -155,6 +128,60 @@ export const RootNavigation = () => {
                 headerTitle: 'Update Client',
                 headerShown: false,
                 presentation: 'modal',
+              }}
+            />
+            <Stack.Screen
+              name="AssignedPlaylist"
+              component={AssignedPlaylist}
+              options={{
+                headerTitle: 'Active Playlist',
+              }}
+            />
+            <Stack.Screen
+              name="PlaylistList"
+              component={PlaylistList}
+              options={{
+                headerTitle: 'Playlists',
+              }}
+            />
+            <Stack.Screen
+              name="CreatePlaylist"
+              component={CreatePlaylist}
+              options={{
+                headerTitle: 'Create Playlist',
+              }}
+            />
+            <Stack.Screen
+              name="ExerciseDetail"
+              component={ExerciseDetail}
+              options={{
+                headerTitle: 'Exercise Detail',
+              }}
+            />
+            <Stack.Screen
+              name="AddExercise"
+              component={AddExercise}
+              options={{
+                headerTitle: 'Add Exercise',
+                headerShown: false,
+                presentation: 'modal',
+              }}
+            />
+
+            <Stack.Screen
+              name="AddVideo"
+              component={AddVideo}
+              options={{
+                headerTitle: 'Add Video',
+                headerShown: false,
+                presentation: 'modal',
+              }}
+            />
+            <Stack.Screen
+              name="PlayListDetail"
+              component={PlayListDetail}
+              options={{
+                headerTitle: 'Playlist Detail',
               }}
             />
           </>

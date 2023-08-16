@@ -8,7 +8,7 @@ import {
   getAllPlaylists,
 } from '../../../services/firebase';
 import {PatientItem} from './patient-item';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, TouchableOpacity} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {NBButton} from '../../../components/nb-button';
 import {CommonActions} from '@react-navigation/native';
@@ -35,7 +35,6 @@ class PatientListView extends React.Component {
 
   syncPatients = () => {
     const {user} = this.context;
-    // // console.log('@@@@XXprops', this.props?.navigation?.state?.params?.user)
     this.fetchPatient(user);
   };
   fetchPatient = async user => {
@@ -75,7 +74,7 @@ class PatientListView extends React.Component {
       .collection('appointments')
       .add(appointment)
       .then(function (res) {
-        // console.log('Document successfully written!');
+        console.log('appointment successfully written!');
       })
       .catch(function (error) {
         console.error('Error writing document: ', error);
@@ -84,7 +83,6 @@ class PatientListView extends React.Component {
 
   render() {
     const {patientList, isLoading} = this.state;
-    console.log('@@@ patientList is', patientList, isLoading);
     return (
       <Container maxWidth="100%" alignItems="center">
         <Box mt="5" maxWidth="100%">
@@ -112,13 +110,22 @@ class PatientListView extends React.Component {
             return item.a;
           }}
           renderItem={({item, index}) => (
-            <PatientItem
-              item={item}
-              navigation={this.props.navigation}
-              deletePatient={this.deletePatient}
-              addAppointmentToDatabase={this.addAppointmentToDatabase}
-              syncPatients={this.syncPatients}
-            />
+            <TouchableOpacity
+              onLongPress={() => {
+                this.context.updateState({selectedPatient: item});
+                this.props.navigation.navigate('Exercises', {
+                  name: item?.name,
+                  item,
+                });
+              }}>
+              <PatientItem
+                item={item}
+                navigation={this.props.navigation}
+                deletePatient={this.deletePatient}
+                addAppointmentToDatabase={this.addAppointmentToDatabase}
+                syncPatients={this.syncPatients}
+              />
+            </TouchableOpacity>
           )}
         />
       </Container>

@@ -12,7 +12,6 @@ import {useRoute} from '@react-navigation/native';
 
 const AddPatientForm = props => {
   const route = useRoute();
-  console.log('@@@ params', route);
   return (
     <Container
       maxWidth="100%"
