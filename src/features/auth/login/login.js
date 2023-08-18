@@ -1,12 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {
-  Text,
-  TextInput,
-  Button as RNButton,
-  Image,
-  View,
-  Platform,
-} from 'react-native';
+import {Text, View, Platform} from 'react-native';
+import {FormControl, Stack} from 'native-base';
 import * as Animatable from 'react-native-animatable';
 import {NBButton} from '../../../components/nb-button';
 import {NBInput} from '../../../components/nb-input';
@@ -15,6 +9,7 @@ import {styles} from './styles';
 import {images} from '../../../assets';
 import GlobalContext from '../../../services/context/globalContext';
 import {handleLogin, googleConfigure, signInWithGoogleAsync} from './actions';
+import {isValidForm, isValidEmail} from '../../../utils';
 
 const zoomOut = {
   0: {
@@ -44,7 +39,9 @@ export const Login = ({navigation}) => {
   // useEffect(() => {
   //   // googleConfigure();
   // }, []);
-
+  const isValid =
+    isValidForm({email: form.email, password: form.password}) &&
+    isValidEmail(form.email);
   const context = useContext(GlobalContext);
   return (
     <View style={styles.container}>
@@ -58,12 +55,20 @@ export const Login = ({navigation}) => {
       <Text style={styles.welcomeMessage}>Welcome!</Text>
       <Text style={styles.signInMessage}> Sign in to get started!</Text>
 
-      <NBInput
-        value={form.email}
-        keyboardType="email-address"
-        placeholder="Email"
-        onChangeText={email => setForm({...form, email})}
-      />
+      <FormControl mb="5" isInvalid={form.email && !isValidEmail(form.email)}>
+        <Stack>
+          <NBInput
+            placeholder="Email"
+            keyboardType="email-address"
+            value={form.email}
+            onChangeText={email => setForm({...form, email})}
+            mb="0"
+          />
+        </Stack>
+        <FormControl.ErrorMessage>
+          Enter a valid email address.
+        </FormControl.ErrorMessage>
+      </FormControl>
       <NBInput
         value={form.password}
         placeholder="Password"
@@ -71,7 +76,11 @@ export const Login = ({navigation}) => {
         onChangeText={password => setForm({...form, password})}
       />
 
-      <NBButton label="Sign In" onPress={() => handleLogin(form, context)} />
+      <NBButton
+        label="Sign In"
+        onPress={() => handleLogin(form, context)}
+        disabled={!isValid}
+      />
 
       {Platform.OS === 'android' ? (
         <GoogleSigninButton

@@ -36,9 +36,6 @@ const addAppointment = data => {
  */
 
 const getAppointment = async createdFor => {
-  // const createdBy = 'this.shoaib@gmail.com';
-  // const cretaedFor = 'Anna.bill@gmail.com';
-
   let appointmentsDocs = await firestore()
     .collection('appointments')
     .where('patientEmail', '==', lowerCase(createdFor))

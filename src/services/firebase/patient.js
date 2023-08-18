@@ -49,10 +49,28 @@ const getPatientUser = async patientEmail => {
   }
 };
 
-export {fetchAllPatients, fetchAppUrls, getPatientUser};
+const getPatient = async patientEmail => {
+  try {
+    const patientsUserDocs = await firestore()
+      .collection('patients')
+      .where('patientEmail', '==', lowerCase(patientEmail))
+      .get();
+    const patientUser = [];
+    patientsUserDocs.forEach(function (doc) {
+      patientUser.push(doc.data());
+    });
+    return patientUser[0];
+  } catch (error) {
+    console.error('@@@ error in getPatient', error);
+    return [];
+  }
+};
+
+export {fetchAllPatients, fetchAppUrls, getPatientUser, getPatient};
 
 export default {
   fetchAllPatients,
   fetchAppUrls,
   getPatientUser,
+  getPatient,
 };

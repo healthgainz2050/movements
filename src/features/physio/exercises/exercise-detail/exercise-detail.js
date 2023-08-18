@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, HStack, Container, Divider} from 'native-base';
+import {Text, HStack, Container, Divider, Box} from 'native-base';
 import {ActivityIndicator, View, Platform} from 'react-native';
 import {VideoPlayer} from '../../../../components/video-player';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -43,15 +43,17 @@ export const ExerciseDetail = props => {
   if (state.dataLoaded) {
     return (
       <Container maxWidth="100%" p="8">
-        <VideoPlayer
-          uri={item.video_url}
-          _onPlaybackStatusUpdate={() => {}}
-          onPressSelectVideo={() =>
-            navigation.navigate('AddVideo', {
-              id,
-            })
-          }
-        />
+        <Box w="100%" h="50%">
+          <VideoPlayer
+            uri={item?.video_url}
+            onPressSelectVideo={() =>
+              navigation.navigate('AddVideo', {
+                id,
+              })
+            }
+          />
+        </Box>
+
         <HStack>
           <Text bold width={'40%'}>
             Exercise

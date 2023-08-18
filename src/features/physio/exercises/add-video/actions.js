@@ -11,9 +11,16 @@ export const fetchExercise = async context => {
   }
 };
 
-export const logVideo = async (context, props, setState, state) => {
+export const logVideo = async (
+  context,
+  props,
+  setState,
+  state,
+  navigation,
+  params,
+) => {
   try {
-    let exerciseid = props.navigation.state.params.id;
+    let exerciseid = params?.id;
     let docRef = await firestore()
       .collection('videos')
       .add({url: props.url, exercise_id: exerciseid});
@@ -24,7 +31,7 @@ export const logVideo = async (context, props, setState, state) => {
 
     setState({...state, submitted: docRef.id});
     fetchExercise(context);
-    props.navigation.goBack();
+    navigation.goBack();
   } catch (error) {
     console.log(error);
   }

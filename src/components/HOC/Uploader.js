@@ -1,75 +1,12 @@
 import React from 'react';
 import {Button, Text, View, ActivityIndicator, Platform} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-// import Permissions from 'react-native-permissions';
-import uuid from 'uuid';
+import {generateUUID} from '../../utils/uuid-generator';
 import ProgressBar from './ProgressBar';
-// import {Container, Body, Content, List, ListItem} from '@native-base';
-// import {createThumbnail} from 'react-native-create-thumbnail';
-// import * as Font from 'expo-font'
-import {getStorage, ref} from '@react-native-firebase/storage';
 
-// Get a reference to the storage service, which is used to create references in your storage bucket
-const storage = getStorage();
+import storage from '@react-native-firebase/storage';
 
-// Create a storage reference from our storage service
-const storageRef = ref(storage);
-/*
-Uploader
-
-TODOS
-
-Dynamically change Video / Photos etc.
-
-*/
-
-/*
- * Example UI component
- * This can be designed however one wants.
- *
- */
-
-const ExampleUploader = props => {
-  let statusText = '';
-  if (props.status != '') {
-    statusText = props.status == '100' ? 'Done!' : 'Uploading';
-  }
-
-  if (props.status == true) {
-    // post to firebase db
-  }
-
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
-      <Button onPress={props.pickMedia} title="Pick a video from camera roll" />
-      <ProgressBar percentage={props.status} />
-      <Text>{statusText}</Text>
-    </View>
-  );
-};
-
-/*
-
-submitForm = async () => {
-    try {
-        let docRef = await db.collection(path).add(this.state);   // // console.log("submitted", docRef.id);
-        this.setState({submitted: docRef.id});
-    } catch (error) {
-        // console.log(error);
-    }
-};
-
-*/
-
-/*
- *
- *
- * Wrapper Component
- *
- *
- */
-
-// const withFilterProps = BaseComponent => ({ mediaType, side }) => {
+const storageRef = storage().ref();
 
 const uploaderWrapper = WrappedComponent => {
   class HOC extends React.Component {
@@ -79,36 +16,15 @@ const uploaderWrapper = WrappedComponent => {
       loading: false,
       status: '0',
       completed: false,
-      fontLoaded: false,
     };
-
-    async componentDidMount() {
-      // await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      // await Permissions.askAsync(Permissions.CAMERA);
-      // await Font.loadAsync({
-      //     Roboto: require("./../../node_modules/native-base/Fonts/Roboto.ttf"),
-      //     Roboto_medium: require("./../../node_modules/native-base/Fonts/Roboto_medium.ttf")
-      // });
-      this.setState({fontLoaded: true});
-    }
-    // generateThumbnail = async () => {
-    //   createThumbnail({
-    //     url:'https://firebasestorage.googleapis.com/v0/b/healthgainz2324.appspot.com/o/d0e08c94-5b30-481a-a349-b2ed6a8ce7c6?alt=media&token=3a999bad-65a7-49c6-bb8f-691ec4eb98ca.mp4',
-    //     timeStamp: 10000,
-    //   })
-    //     .then((response) => {
-    //       // console.log('thumbnail response is', response);
-    //     })
-    //     .catch((err) => // console.log({err}));
-    // };
 
     uploadImageAsync = async uri => {
       this.setState({loading: true});
       const response = await fetch(uri);
       const blob = await response.blob();
       // create a path.
-      const ref = storage.child(uuid.v4());
-      const uploadTask = ref.put(blob);
+      const fileRef = storageRef.child('videos/' + generateUUID());
+      const uploadTask = fileRef.put(blob);
 
       uploadTask.on(
         'state_changed',
@@ -142,6 +58,7 @@ const uploaderWrapper = WrappedComponent => {
           mediaType: 'video', // Neds to to be props based.
         });
         this.handleImagePicked(pickerResult);
+        return pickerResult;
       } catch (error) {
         console.log('error in pickMedia', error);
       }
@@ -166,28 +83,13 @@ const uploaderWrapper = WrappedComponent => {
     };
 
     render() {
-      if (this.state.fontLoaded)
-        return (
-          <WrappedComponent
-            pickMedia={this.pickMedia}
-            completed={this.state.completed}
-            status={this.state.status}
-            url={this.state.url}
-            {...this.props}
-          />
-        );
       return (
-        <ActivityIndicator
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: '50%',
-            width: '100%',
-            zIndex: 2,
-            translateY: -10,
-          }}
-          size="large"
-          color={'grey'}
+        <WrappedComponent
+          pickMedia={this.pickMedia}
+          completed={this.state.completed}
+          status={this.state.status}
+          url={this.state.url}
+          {...this.props}
         />
       );
     }

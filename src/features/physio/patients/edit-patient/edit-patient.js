@@ -7,6 +7,7 @@ import {ModalHeader} from '../../../../components/modal-header';
 import {NBInput} from '../../../../components/nb-input';
 import {NBButton} from '../../../../components/nb-button';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {isValidForm} from '../../../../utils';
 
 export const EditPatient = props => {
   const route = useRoute();
@@ -39,7 +40,7 @@ export const EditPatient = props => {
         });
       });
   };
-
+  const isValid = isValidForm(state);
   return (
     <Container
       maxWidth="100%"
@@ -86,9 +87,9 @@ export const EditPatient = props => {
       </FormControl>
       <Box mt="5">
         <NBButton
+          disabled={!isValid}
           onPress={() => {
             submitForm();
-     
           }}
           label="Update Client"
         />

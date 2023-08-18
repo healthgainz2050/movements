@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Text, View, Switch} from 'react-native';
 import {styles} from './styles';
 import {images} from '../../../assets';
-import {lowerCase} from '../../../utils';
+import {isValidEmail, isValidForm, lowerCase} from '../../../utils';
 import {NBInput} from '../../../components/nb-input';
 import {handleSignup, openUrl} from './actions';
 import * as Animatable from 'react-native-animatable';
@@ -10,20 +10,19 @@ import {Heading} from 'native-base';
 import {NBButton} from '../../../components/nb-button';
 import Toast from 'react-native-toast-message';
 import GlobalContext from '../../../services/context/globalContext';
+import {Stack, FormControl} from 'native-base';
 
 export const Signup = ({navigation}) => {
   const context = useContext(GlobalContext);
 
   const [form, setForm] = useState({
-    displayName: 'shoaib',
-    password: '123456',
-    name: 'shoaib',
-    physio: true,
+    displayName: '',
+    password: '',
+    name: '',
+    physio: false,
   });
 
-  const [email, setEmail] = useState(
-    `this.shoaib+${Math.floor(Math.random() * 30)}@gmail.com`,
-  );
+  const [email, setEmail] = useState(null);
 
   const updateInputVal = (val, prop) => {
     const newValue = {
@@ -37,6 +36,13 @@ export const Signup = ({navigation}) => {
     ...form,
     email: lowerCase(email),
   };
+
+  const isValid =
+    isValidForm({
+      displayName: form.displayName,
+      password: form.password,
+      email,
+    }) && isValidEmail(email);
 
   return (
     <View style={styles.container}>
@@ -54,11 +60,20 @@ export const Signup = ({navigation}) => {
         value={form.displayName}
         onChangeText={val => updateInputVal(val, 'displayName')}
       />
-      <NBInput
-        placeholder="Email"
-        value={email}
-        onChangeText={val => setEmail(val)}
-      />
+      <FormControl mb="5" isInvalid={email && !isValidEmail(email)}>
+        <Stack>
+          <NBInput
+            placeholder="Email"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={val => setEmail(val)}
+            mb="0"
+          />
+        </Stack>
+        <FormControl.ErrorMessage>
+          Enter a valid email address.
+        </FormControl.ErrorMessage>
+      </FormControl>
       <NBInput
         placeholder="Password"
         value={form.password}
@@ -91,7 +106,11 @@ export const Signup = ({navigation}) => {
           </Text>
         </Text>
       </View>
-      <NBButton label="Sign Up" onPress={() => handleSignup(myForm, context)} />
+      <NBButton
+        label="Sign Up"
+        onPress={() => handleSignup(myForm, context)}
+        disabled={!isValid}
+      />
 
       <Toast position="bottom" bottomOffset={20} />
       <Text

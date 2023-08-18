@@ -27,6 +27,7 @@ export const PlaylistRow = ({item}) => {
   };
   return (
     <Pressable
+      m="1"
       onPress={() => {
         navigation.navigate('PlayListDetail', {
           playlist: item,

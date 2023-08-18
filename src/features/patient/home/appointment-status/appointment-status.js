@@ -1,11 +1,9 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, TouchableOpacity} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {getAppointment} from '../../../../services/firebase';
-import {Heading, Center, Text} from 'native-base';
-// import SaveAppointment from '../../../../test';
+import {Text, HStack, Box} from 'native-base';
+import {SaveAppointment} from '../../../../components/save-appointment';
 import moment from 'moment';
-import {styles} from './styles';
 
 export const AppointmentStatus = ({user}) => {
   const [state, setState] = useState({
@@ -33,44 +31,28 @@ export const AppointmentStatus = ({user}) => {
   const appointmentStatus = () => {
     if (isLoadingAppointment) {
       return (
-        <View style={styles.row}>
-          <Heading size="lg" mh="10">
-            Checking for appointment...
-          </Heading>
-        </View>
+        <Text fontSize="sm" p="2">
+          Checking for appointment...
+        </Text>
       );
     }
 
     if (appointmentDetails?.occurrenceDate) {
       return (
-        <TouchableOpacity
-          style={[
-            styles.row,
-            {alignItems: 'center', justifyContent: 'flex-start'},
-          ]}>
-          <Ionicons name="md-calendar" size={40} color={'#2eaeec'} />
-          <View style={{justifyContent: 'center'}}>
-            <Heading size="lg" mh="10">
-              Next appointment at:
-            </Heading>
-            <Center>
-              <Text bold mh="10" color="#3629C5" fontSize="xl">
-                Bold
-                {moment(appointmentDetails?.occurrenceDate).format('lll')}
-              </Text>
-            </Center>
-
-            {/* <SaveAppointment appointmentDetails={appointmentDetails} /> */}
-          </View>
-        </TouchableOpacity>
+        <HStack mb="2">
+          <MaterialIcons name="calendar-month" size={40} color={'#2eaeec'} />
+          <Box justifyContent="center" ml="2" mr="2">
+            <Text fontSize="sm">Next appointment at:</Text>
+            <Text bold color="#3629C5" fontSize="sm">
+              {moment(appointmentDetails?.occurrenceDate).format('lll')}
+            </Text>
+          </Box>
+          <SaveAppointment appointmentDetails={appointmentDetails} />
+        </HStack>
       );
     } else {
       return (
-        <View style={styles.row}>
-          <Heading size="lg" mh="10">
-            You don't have any appointment at the moment
-          </Heading>
-        </View>
+        <Text fontSize="sm">You don't have any appointment at the moment</Text>
       );
     }
   };

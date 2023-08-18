@@ -34,6 +34,14 @@ export const getGDriveVideoUrl = uri => {
   return null;
 };
 
+export const getDropBoxUrl = uri => {
+  if (uri?.indexOf('dropbox.com') !== -1) {
+    const updatedUri = uri?.replace('dl=0', 'raw=1');
+    return updatedUri;
+  }
+  return null;
+};
+
 export const lowerCase = str => {
   return str?.toLowerCase();
 };
@@ -58,6 +66,22 @@ export const sendEmail = async (to, from, appUrls) => {
   }
 
   return Linking.openURL(url);
+};
+
+export const isValidForm = obj => {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (obj[key] === null || obj[key] === undefined || obj[key] === '') {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+export const isValidEmail = email => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
 };
 
 // const downloadFileTest = (background, url) => {
