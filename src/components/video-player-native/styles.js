@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 10,
+    height: 50,
   },
   slider: {width: '30%', height: 40, marginLeft: 10},
   autoText: {marginLeft: 10, marginRight: 20},

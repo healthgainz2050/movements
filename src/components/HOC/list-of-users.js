@@ -36,7 +36,7 @@ const SubscribeToCollection = path => WrappedComponent => {
         .onSnapshot(querySnapshot => {
           let data = [];
 
-          querySnapshot.forEach(doc => {
+          querySnapshot?.forEach(doc => {
             let docData = doc.data();
             docData['id'] = doc.id;
             data.push(docData);

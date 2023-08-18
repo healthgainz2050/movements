@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-// import VideoPlayer from 'react-native-video-player';
+import VideoPlayer from 'react-native-video-player';
 import Slider from '@react-native-community/slider';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {styles} from './styles';
 import {props, defaultProps} from './props';
+import {Container} from 'native-base';
+import {windowHeight, windowWidth} from '../../utils';
 
-export const VideoPlayerNative = ({uri, onEndVideo}) => {
+export const VideoPlayerNative = ({uri, onEndVideo, isClientHome}) => {
   let source = {uri};
   const playerRef = useRef(null);
   const [volume, setVolume] = useState(0.5);
@@ -24,8 +26,11 @@ export const VideoPlayerNative = ({uri, onEndVideo}) => {
     updatedUri = uri.replace('dl=0', 'raw=1');
   }
   return (
-    <View>
-      {/* <VideoPlayer
+    <Container
+      maxWidth="100%"
+      height={isClientHome ? '32%' : '50%'}
+      bg="primary.100">
+      <VideoPlayer
         ref={playerRef}
         video={{uri: updatedUri}}
         thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
@@ -33,7 +38,7 @@ export const VideoPlayerNative = ({uri, onEndVideo}) => {
         loop={repeat}
         videoProps={{
           shouldPlay: true,
-          resizeMode: VideoPlayer.RESIZE_MODE_CONTAIN,
+          resizeMode: VideoPlayer.COVER,
           source,
           volume,
           isLooping: repeat,
@@ -41,10 +46,14 @@ export const VideoPlayerNative = ({uri, onEndVideo}) => {
         }}
         inFullscreen={false}
         onEnd={onEndVideo}
-      /> */}
+        style={{
+          width: isClientHome ? windowWidth : windowWidth * 0.85,
+          height: windowHeight * 0.2,
+        }}
+      />
       <View style={styles.rowContainer}>
         <View style={styles.row}>
-          <Ionicons name="md-volume-high" size={24} color="black" />
+          <MaterialIcons name="volume-up" size={24} color="black" />
           <Slider
             style={styles.slider}
             step={1}
@@ -52,7 +61,7 @@ export const VideoPlayerNative = ({uri, onEndVideo}) => {
             maximumValue={100}
             value={volume * 100}
             minimumTrackTintColor="#2eaeec"
-            onValueChange={(value) => {
+            onValueChange={value => {
               setVolume(value / 100);
             }}
             maximumTrackTintColor="#000000"
@@ -60,15 +69,15 @@ export const VideoPlayerNative = ({uri, onEndVideo}) => {
           />
         </View>
         <TouchableOpacity style={styles.row} onPress={() => setRepeat(!repeat)}>
-          <Ionicons
-            name="md-repeat"
+          <MaterialIcons
+            name="repeat"
             size={24}
             color={!repeat ? 'grey' : '#2eaeec'}
           />
           <Text style={styles.autoText}>Auto Play</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </Container>
   );
 };
 

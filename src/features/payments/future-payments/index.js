@@ -1,0 +1,1 @@
+export {SetupFuturePaymentScreen} from './future-payments';

@@ -4,7 +4,7 @@ import {
   PostFormData,
   byPropKey,
 } from '../../../../components/HOC/add-patient-form';
-import {lowerCase} from '../../../../utils';
+import {lowerCase, isValidForm, isValidEmail} from '../../../../utils';
 import {ModalHeader} from '../../../../components/modal-header';
 import {NBInput} from '../../../../components/nb-input';
 import {NBButton} from '../../../../components/nb-button';
@@ -12,6 +12,24 @@ import {useRoute} from '@react-navigation/native';
 
 const AddPatientForm = props => {
   const route = useRoute();
+
+  const initialState = {
+    name: '',
+    phone: '',
+    patientEmail: '',
+    ...props?.item,
+  };
+
+  const isEmailValid = isValidEmail(initialState.patientEmail);
+  console.log(
+    '@@@ oatient item',
+    props.item,
+    isValidEmail(initialState.patientEmail),
+    isEmailValid,
+    isValidForm(initialState) && !isEmailValid,
+  );
+  const isValid = isValidForm(initialState) && isEmailValid;
+
   return (
     <Container
       maxWidth="100%"
@@ -26,19 +44,29 @@ const AddPatientForm = props => {
             onChangeText={text => props.handleChange(byPropKey('name', text))}
           />
         </Stack>
+      </FormControl>
+      <FormControl
+        isInvalid={initialState.patientEmail && !isEmailValid}
+        mb="5">
         <Stack>
           <NBInput
             placeholder="Email Address"
             onChangeText={text =>
               props.handleChange(byPropKey('patientEmail', lowerCase(text)))
             }
+            mb="0"
           />
+          <FormControl.ErrorMessage>
+            Enter a valid email address
+          </FormControl.ErrorMessage>
         </Stack>
+      </FormControl>
+      <FormControl>
         <Stack>
           <NBInput
             placeholder="Phone"
             onChangeText={number =>
-              props.handleChange(byPropKey('Phone', number))
+              props.handleChange(byPropKey('phone', number))
             }
           />
         </Stack>
@@ -52,12 +80,9 @@ const AddPatientForm = props => {
             route?.params?.syncPatients();
           }}
           label="Add Patient"
+          disabled={!isValid}
         />
       </Box>
-
-      {/* <Button full style={{marginHorizontal: 15, backgroundColor: '#007aff'}}>
-          <Text style={{fontWeight: 'bold'}}></Text>
-        </Button> */}
     </Container>
   );
 };

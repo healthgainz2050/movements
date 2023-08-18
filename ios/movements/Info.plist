@@ -78,5 +78,9 @@
 	<string>Movements wants to access your contacts to show their work address in calendar locations suggestions.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need to access your library to upload video from library.</string>
+	 <key>LSApplicationQueriesSchemes</key>
+  	<array>
+    	<string>about</string>
+  	</array>
 </dict>
 </plist>

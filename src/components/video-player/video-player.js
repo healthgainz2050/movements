@@ -1,17 +1,28 @@
-import React, {useCallback} from 'react';
-import {Text, Pressable, Box} from 'native-base';
+import React, {useCallback, useState} from 'react';
+import {Text, Pressable, Box, HStack} from 'native-base';
 import YoutubeIframe from '../youtube-iframe';
 import {VideoPlayerNative} from '../video-player-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import {getYouTubeVideoId, getGDriveVideoUrl} from '../../utils';
+import {getYouTubeVideoId, getGDriveVideoUrl, getDropBoxUrl} from '../../utils';
 import {WebView} from 'react-native-webview';
 import {styles} from './styles';
 import {props, defaultProps} from './props';
+import {ActivityIndicator} from 'react-native';
 
-export const VideoPlayer = ({uri, onPressSelectVideo, onEndVideo}) => {
+export const VideoPlayer = ({
+  uri,
+  onPressSelectVideo,
+  onEndVideo,
+  isClientHome,
+}) => {
+  const [videoState, setVideoState] = useState({
+    isLoading: true,
+    loadingProgress: 0,
+  });
   const youtubeVideoId = getYouTubeVideoId(uri);
   const gdriveVideoURL = getGDriveVideoUrl(uri);
+  const dropboxURL = getDropBoxUrl(uri);
 
   const onEndVideoHandler = useCallback(() => {
     if (onEndVideo) {
@@ -34,11 +45,50 @@ export const VideoPlayer = ({uri, onPressSelectVideo, onEndVideo}) => {
           source={{
             html: gdriveVideoURL,
           }}
-          style={styles.webView}
         />
       );
+    } else if (dropboxURL) {
+      return (
+        <>
+          <WebView
+            source={{
+              uri: dropboxURL,
+            }}
+            onLoadStart={() => {
+              console.log('load start');
+            }}
+            onLoadProgress={({nativeEvent}) => {
+              console.log('load onLoadProgress');
+              setVideoState({
+                ...videoState,
+                loadingProgress: nativeEvent?.progress,
+                isLoading: nativeEvent?.progress !== 1,
+              });
+            }}
+            onLoadEnd={() => {
+              setVideoState({...videoState, isLoading: false});
+              console.log('load end');
+            }}
+          />
+          <HStack p="5">
+            {videoState.isLoading && <ActivityIndicator />}
+            {videoState.isLoading && (
+              <Text ml="5">
+                Video is loading...{' '}
+                {Math.round(videoState.loadingProgress * 100)}%
+              </Text>
+            )}
+          </HStack>
+        </>
+      );
     }
-    return <VideoPlayerNative uri={uri} onEndVideo={onEndVideoHandler} />;
+    return (
+      <VideoPlayerNative
+        uri={uri}
+        onEndVideo={onEndVideoHandler}
+        isClientHome={isClientHome}
+      />
+    );
   };
   if (uri) {
     return <React.Fragment>{renderVideoPlayer()}</React.Fragment>;

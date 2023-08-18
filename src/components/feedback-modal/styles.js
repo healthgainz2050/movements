@@ -32,6 +32,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     alignSelf: 'flex-end',
+    marginRight: 8,
   },
   textStyle: {
     color: 'white',

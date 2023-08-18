@@ -1,17 +1,16 @@
 import React, {useContext, useEffect} from 'react';
-import {View, Text, Button} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import firestore from '@react-native-firebase/firestore';
-
+import lodash from 'lodash';
 /**Auth Feature */
 import {Login} from '../features/auth/login';
 import {Splash} from '../features/auth/splash/splash';
 import {ForgotPassword} from '../features/auth/forgot-password';
 import {Signup} from '../features/auth/register';
 import {SignOutButton} from '../components/sign-out-button';
-
+import {StripeSetup} from '../components/stripe-setup';
 /**Patient Feature */
 import {Home} from '../features/patient/home';
 
@@ -31,13 +30,13 @@ import {ExerciseDetail} from '../features/physio/exercises/exercise-detail';
 import GlobalContext from '../services/context/globalContext';
 import {AddVideo} from '../features/physio/exercises/add-video';
 import {PlayListDetail} from '../features/physio/playlists/playlist-detail';
+import {SetupFuturePaymentScreen} from '../features/payments/future-payments';
 
 const Stack = createNativeStackNavigator();
 
 export const RootNavigation = () => {
   const context = useContext(GlobalContext);
   const {user, authLoading} = context;
-
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
@@ -59,7 +58,7 @@ export const RootNavigation = () => {
 
     let userData = userParam;
     if (documentSnapshot.exists) {
-      userData = {...documentSnapshot?.data()};
+      userData = {...documentSnapshot?.data(), uuid: userParam.uid};
     }
     context.updateState({user: userData, authLoading: false});
   };
@@ -103,6 +102,7 @@ export const RootNavigation = () => {
               options={{
                 headerTitle: 'Clients',
                 headerLeft: () => <SignOutButton />,
+                headerRight: () => <StripeSetup />,
               }}
             />
             <Stack.Screen
@@ -184,13 +184,20 @@ export const RootNavigation = () => {
                 headerTitle: 'Playlist Detail',
               }}
             />
+            <Stack.Screen
+              name="SetupPaymentScreen"
+              component={SetupFuturePaymentScreen}
+              options={{
+                headerTitle: 'Add Your Card',
+              }}
+            />
           </>
         ) : (
           <Stack.Screen
             name="ClientHome"
             component={Home}
             options={{
-              headerTitle: user?.name || user?.displayName,
+              headerTitle: lodash.capitalize(user?.name || user?.displayName),
               headerLeft: () => <SignOutButton />,
             }}
           />
