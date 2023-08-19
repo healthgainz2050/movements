@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -36,13 +36,17 @@ const Stack = createNativeStackNavigator();
 
 export const RootNavigation = () => {
   const context = useContext(GlobalContext);
-  const {user, authLoading} = context;
+  const {user, authLoading, isPhysio} = context;
+  const [authUser, setAuthUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);
 
   const onAuthStateChanged = userParam => {
+    setAuthUser(userParam);
     if (!userParam) {
       context.updateState({user: null, authLoading: false});
     } else {
@@ -61,16 +65,130 @@ export const RootNavigation = () => {
       userData = {...documentSnapshot?.data(), uuid: userParam.uid};
     }
     context.updateState({user: userData, authLoading: false});
+    setIsLoading(false);
   };
 
-  if (authLoading) {
+  if (authLoading || (authUser && isLoading)) {
     return <Splash />;
   }
+
+  const renderApp = () => {
+    if (user?.physio || isPhysio) {
+      return (
+        <>
+          <Stack.Screen
+            name="PhysioHome"
+            component={PhysioHome}
+            options={{
+              headerTitle: 'Clients',
+              headerLeft: () => <SignOutButton />
+            }}
+          />
+          <Stack.Screen
+            name="AddPatient"
+            component={AddPatient}
+            options={{
+              headerTitle: 'Add Client',
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
+          <Stack.Screen
+            name="UsageAnalytics"
+            component={UsageAnalytics}
+            options={{
+              headerTitle: 'App Usage',
+            }}
+          />
+          <Stack.Screen
+            name="EditPatient"
+            component={EditPatient}
+            options={{
+              headerTitle: 'Update Client',
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
+          <Stack.Screen
+            name="AssignedPlaylist"
+            component={AssignedPlaylist}
+            options={{
+              headerTitle: 'Active Playlist',
+            }}
+          />
+          <Stack.Screen
+            name="PlaylistList"
+            component={PlaylistList}
+            options={{
+              headerTitle: 'Playlists',
+            }}
+          />
+          <Stack.Screen
+            name="CreatePlaylist"
+            component={CreatePlaylist}
+            options={{
+              headerTitle: 'Create Playlist',
+            }}
+          />
+          <Stack.Screen
+            name="ExerciseDetail"
+            component={ExerciseDetail}
+            options={{
+              headerTitle: 'Exercise Detail',
+            }}
+          />
+          <Stack.Screen
+            name="AddExercise"
+            component={AddExercise}
+            options={{
+              headerTitle: 'Add Exercise',
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
+
+          <Stack.Screen
+            name="AddVideo"
+            component={AddVideo}
+            options={{
+              headerTitle: 'Add Video',
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
+          <Stack.Screen
+            name="PlayListDetail"
+            component={PlayListDetail}
+            options={{
+              headerTitle: 'Playlist Detail',
+            }}
+          />
+          <Stack.Screen
+            name="SetupPaymentScreen"
+            component={SetupFuturePaymentScreen}
+            options={{
+              headerTitle: 'Add Your Card',
+            }}
+          />
+        </>
+      );
+    }
+    return (
+      <Stack.Screen
+        name="ClientHome"
+        component={Home}
+        options={{
+          headerTitle: lodash.capitalize(user?.name || user?.displayName),
+          headerLeft: () => <SignOutButton />,
+        }}
+      />
+    );
+  };
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!user ? (
+        {!authUser ? (
           <>
             <Stack.Screen
               name="SignIn"
@@ -94,113 +212,8 @@ export const RootNavigation = () => {
               }}
             />
           </>
-        ) : user?.physio ? (
-          <>
-            <Stack.Screen
-              name="PhysioHome"
-              component={PhysioHome}
-              options={{
-                headerTitle: 'Clients',
-                headerLeft: () => <SignOutButton />,
-                headerRight: () => <StripeSetup />,
-              }}
-            />
-            <Stack.Screen
-              name="AddPatient"
-              component={AddPatient}
-              options={{
-                headerTitle: 'Add Client',
-                headerShown: false,
-                presentation: 'modal',
-              }}
-            />
-            <Stack.Screen
-              name="UsageAnalytics"
-              component={UsageAnalytics}
-              options={{
-                headerTitle: 'App Usage',
-              }}
-            />
-            <Stack.Screen
-              name="EditPatient"
-              component={EditPatient}
-              options={{
-                headerTitle: 'Update Client',
-                headerShown: false,
-                presentation: 'modal',
-              }}
-            />
-            <Stack.Screen
-              name="AssignedPlaylist"
-              component={AssignedPlaylist}
-              options={{
-                headerTitle: 'Active Playlist',
-              }}
-            />
-            <Stack.Screen
-              name="PlaylistList"
-              component={PlaylistList}
-              options={{
-                headerTitle: 'Playlists',
-              }}
-            />
-            <Stack.Screen
-              name="CreatePlaylist"
-              component={CreatePlaylist}
-              options={{
-                headerTitle: 'Create Playlist',
-              }}
-            />
-            <Stack.Screen
-              name="ExerciseDetail"
-              component={ExerciseDetail}
-              options={{
-                headerTitle: 'Exercise Detail',
-              }}
-            />
-            <Stack.Screen
-              name="AddExercise"
-              component={AddExercise}
-              options={{
-                headerTitle: 'Add Exercise',
-                headerShown: false,
-                presentation: 'modal',
-              }}
-            />
-
-            <Stack.Screen
-              name="AddVideo"
-              component={AddVideo}
-              options={{
-                headerTitle: 'Add Video',
-                headerShown: false,
-                presentation: 'modal',
-              }}
-            />
-            <Stack.Screen
-              name="PlayListDetail"
-              component={PlayListDetail}
-              options={{
-                headerTitle: 'Playlist Detail',
-              }}
-            />
-            <Stack.Screen
-              name="SetupPaymentScreen"
-              component={SetupFuturePaymentScreen}
-              options={{
-                headerTitle: 'Add Your Card',
-              }}
-            />
-          </>
         ) : (
-          <Stack.Screen
-            name="ClientHome"
-            component={Home}
-            options={{
-              headerTitle: lodash.capitalize(user?.name || user?.displayName),
-              headerLeft: () => <SignOutButton />,
-            }}
-          />
+          renderApp()
         )}
       </Stack.Navigator>
     </NavigationContainer>

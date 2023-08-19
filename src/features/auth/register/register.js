@@ -11,18 +11,19 @@ import {NBButton} from '../../../components/nb-button';
 import Toast from 'react-native-toast-message';
 import GlobalContext from '../../../services/context/globalContext';
 import {Stack, FormControl} from 'native-base';
+import {GoogleSignIn} from '../../../components/google-sign-in';
 
 export const Signup = ({navigation}) => {
   const context = useContext(GlobalContext);
 
   const [form, setForm] = useState({
-    displayName: '',
-    password: '',
-    name: '',
-    physio: false,
+    displayName: 'Tester',
+    password: '123456',
+    name: 'tester',
+    physio: true,
   });
-
-  const [email, setEmail] = useState(null);
+  var val = Math.floor(1000 + Math.random() * 9000);
+  const [email, setEmail] = useState(`this.shoaib+${val}@gmail.com`);
 
   const updateInputVal = (val, prop) => {
     const newValue = {
@@ -93,7 +94,7 @@ export const Signup = ({navigation}) => {
       </View>
       <View style={styles.mb20}>
         <Text style={styles.gdpr}>
-          By using HealthGainz application, you agree to
+          By using Movements application, you agree to
         </Text>
         <Text style={styles.gdpr}>
           {'our '}
@@ -111,7 +112,7 @@ export const Signup = ({navigation}) => {
         onPress={() => handleSignup(myForm, context)}
         disabled={!isValid}
       />
-
+      <GoogleSignIn />
       <Toast position="bottom" bottomOffset={20} />
       <Text
         style={styles.alreadyBtn}

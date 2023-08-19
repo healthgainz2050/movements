@@ -40,7 +40,9 @@ export const Home = () => {
 
   const appState = useRef(AppState.currentState);
   const context = useContext(GlobalContext);
-  const {email, uid} = context?.user;
+
+  const email = context?.user?.email;
+  const uid = context?.user?.uid;
 
   useEffect(() => {
     if (appState?.current === 'active') {
@@ -91,8 +93,11 @@ export const Home = () => {
   }, [email]);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (email) {
+      fetchData();
+    }
+  }, [email]);
+
   return (
     <>
       <Container maxWidth="100%" alignItems="center">
