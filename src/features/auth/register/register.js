@@ -17,13 +17,13 @@ export const Signup = ({navigation}) => {
   const context = useContext(GlobalContext);
 
   const [form, setForm] = useState({
-    displayName: 'Tester',
-    password: '123456',
-    name: 'tester',
-    physio: true,
+    displayName: '',
+    password: '',
+    name: '',
+    physio: false,
   });
   var val = Math.floor(1000 + Math.random() * 9000);
-  const [email, setEmail] = useState(`this.shoaib+${val}@gmail.com`);
+  const [email, setEmail] = useState(null);
 
   const updateInputVal = (val, prop) => {
     const newValue = {

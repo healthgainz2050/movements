@@ -54,11 +54,7 @@ export const VideoPlayer = ({
             source={{
               uri: dropboxURL,
             }}
-            onLoadStart={() => {
-              console.log('load start');
-            }}
             onLoadProgress={({nativeEvent}) => {
-              console.log('load onLoadProgress');
               setVideoState({
                 ...videoState,
                 loadingProgress: nativeEvent?.progress,
@@ -67,7 +63,6 @@ export const VideoPlayer = ({
             }}
             onLoadEnd={() => {
               setVideoState({...videoState, isLoading: false});
-              console.log('load end');
             }}
           />
           <HStack p="5">

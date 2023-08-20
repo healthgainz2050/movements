@@ -7,11 +7,14 @@ import {Platform, Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import config from '../../android/app/google-services.json';
 import GlobalContext from '../services/context/globalContext';
+import firestore from '@react-native-firebase/firestore';
+
 GoogleSignin.configure({
   webClientId: config.client[0].oauth_client[0].client_id,
 });
 
 export const GoogleSignIn = () => {
+  var isPhysio = false;
   const context = useContext(GlobalContext);
   const onGoogleButtonPress = async () => {
     // Check if your device supports Google Play
@@ -19,19 +22,20 @@ export const GoogleSignIn = () => {
       {
         text: 'NO',
         onPress: () => {
-          signIn();
+          context.updateState({isPhysio});
+          setTimeout(() => signIn(), 400);
         },
         style: 'cancel',
       },
       {
         text: 'Yes',
         onPress: () => {
-          context.updateState({isPhysio: true});
-          signIn();
+          isPhysio = true;
+          context.updateState({isPhysio});
+          setTimeout(() => signIn(), 400);
         },
       },
     ]);
-    return;
   };
 
   const signIn = async () => {
@@ -43,7 +47,20 @@ export const GoogleSignIn = () => {
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
     // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
+    auth()
+      .signInWithCredential(googleCredential)
+      .then(async userData => {
+        const {displayName, uid, email} = userData?.user;
+        const {isNewUser} = userData?.additionalUserInfo;
+        if (isNewUser) {
+          await firestore().collection('users').doc(uid).set({
+            displayName,
+            name: displayName,
+            physio: isPhysio,
+            email,
+          });
+        }
+      });
   };
 
   return Platform.OS === 'android' ? (
@@ -63,5 +80,5 @@ const styles = {
   googleBtn: {
     width: '100%',
     marginTop: 5,
-  }
+  },
 };
