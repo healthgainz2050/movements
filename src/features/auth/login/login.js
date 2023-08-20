@@ -1,30 +1,16 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Text, View, Platform} from 'react-native';
+import {Text, View, Platform, Alert} from 'react-native';
 import {FormControl, Stack} from 'native-base';
 import * as Animatable from 'react-native-animatable';
 import {NBButton} from '../../../components/nb-button';
 import {NBInput} from '../../../components/nb-input';
-import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
 import {styles} from './styles';
 import {images} from '../../../assets';
 import GlobalContext from '../../../services/context/globalContext';
-import {handleLogin, googleConfigure, signInWithGoogleAsync} from './actions';
+import {handleLogin} from './actions';
 import {isValidForm, isValidEmail} from '../../../utils';
 
-const zoomOut = {
-  0: {
-    opacity: 1,
-    scale: 1,
-  },
-  0.5: {
-    opacity: 1,
-    scale: 0.3,
-  },
-  1: {
-    opacity: 0,
-    scale: 0,
-  },
-};
+import {GoogleSignIn} from '../../../components/google-sign-in';
 export const Login = ({navigation}) => {
   const [form, setForm] = useState({
     email: null,
@@ -36,9 +22,7 @@ export const Login = ({navigation}) => {
     config: null,
   });
 
-  // useEffect(() => {
-  //   // googleConfigure();
-  // }, []);
+
   const isValid =
     isValidForm({email: form.email, password: form.password}) &&
     isValidEmail(form.email);
@@ -82,15 +66,8 @@ export const Login = ({navigation}) => {
         disabled={!isValid}
       />
 
-      {Platform.OS === 'android' ? (
-        <GoogleSigninButton
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
-          onPress={signInWithGoogleAsync}
-          title="Sign In With Google"
-          style={styles.googleBtn}
-        />
-      ) : null}
+      <GoogleSignIn />
+
       <Text
         style={styles.loginText}
         onPress={() => navigation.navigate('ForgotPassword')}>

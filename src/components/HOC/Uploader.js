@@ -42,7 +42,6 @@ const uploaderWrapper = WrappedComponent => {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-            // console.log('uploadTask', downloadURL);
             this.setState({url: downloadURL, completed: true});
             // use this to add to video list.
             return downloadURL;

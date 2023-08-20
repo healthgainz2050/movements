@@ -58,9 +58,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   googleBtn: {
-    width: 342,
-    height: 48,
-    backgroundColor: '#3D9DF2',
+    width: '100%',
     marginTop: 5,
   },
 });

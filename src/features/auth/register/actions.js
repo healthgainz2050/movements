@@ -46,7 +46,7 @@ export const handleSignup = async (form, context) => {
     let userInfo = form;
     delete userInfo['password'];
 
-    context.updateState({user: userInfo});
+    context.updateState({user: userInfo, isPhysio: form?.physio});
     await firestore().collection('users').doc(uid).set(userInfo);
   } catch (error) {
     let errorMessage = error.message;

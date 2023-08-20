@@ -1,6 +1,6 @@
 import React from 'react';
 import SubscribeToCollection from '../../../components/HOC/list-of-users';
-import {Container, Box, FlatList} from 'native-base';
+import {Container, Box, FlatList, HStack} from 'native-base';
 import GlobalContext from '../../../services/context/globalContext';
 import {
   fetchAllPatients,
@@ -85,15 +85,30 @@ class PatientListView extends React.Component {
     const {patientList, isLoading} = this.state;
     return (
       <Container maxWidth="100%" alignItems="center">
-        <Box mt="5" maxWidth="100%">
-          <NBButton
-            onPress={() => {
-              this.props.navigation.navigate('AddPatient', {
-                syncPatients: this.syncPatients,
-              });
-            }}
-            label="Add Profile"
-          />
+        <Box mt="5" maxWidth="80%">
+          <HStack alignItems="center" justifyContent="center">
+            <NBButton
+              onPress={() => {
+                this.props.navigation.navigate('AddPatient', {
+                  syncPatients: this.syncPatients,
+                });
+              }}
+              label="Add Profile"
+              ml="5"
+              mr="5"
+            />
+            <NBButton
+              onPress={() => {
+                this.props.navigation.navigate('SetupPaymentScreen', {
+                  syncPatients: this.syncPatients,
+                });
+              }}
+              ml="5"
+              mr="5"
+              label="Add Payments"
+            />
+          </HStack>
+
           {isLoading && (
             <ActivityIndicator
               size="large"

@@ -12,7 +12,8 @@ export const AppointmentStatus = ({user}) => {
     isAppointmentSaved: false,
   });
   const {appointmentDetails, isLoadingAppointment} = state;
-  const {email, uid} = user;
+  const email = user?.email;
+  const uid = user?.uid;
 
   const fetchAppointments = useCallback(async () => {
     setState({...state, isLoadingAppointment: true});

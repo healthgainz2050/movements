@@ -21,13 +21,6 @@ const AddPatientForm = props => {
   };
 
   const isEmailValid = isValidEmail(initialState.patientEmail);
-  console.log(
-    '@@@ oatient item',
-    props.item,
-    isValidEmail(initialState.patientEmail),
-    isEmailValid,
-    isValidForm(initialState) && !isEmailValid,
-  );
   const isValid = isValidForm(initialState) && isEmailValid;
 
   return (
