@@ -9,7 +9,7 @@ import {props, defaultProps} from './props';
 const PlaylistItem = ({item, onPressVideo, endedVideos}) => {
   const exerciseDetail = `${item.reps ? `Reps ${item.reps}  ` : ''}⁃ ${
     item.sets ? `Sets ${item.sets}  ` : ''
-  }⁃ ${item.hold ? `Hold ${item.hold}  ` : ''}`;
+  }⁃ ${item.hold ? `Hold for ${item.hold}  ` : ''}`;
   return (
     <ExerciseItem
       onPress={() => onPressVideo(item?.video_url)}

@@ -16,12 +16,12 @@ export const ExerciseRow = ({item}) => {
         })
       }>
       <Container p="2" border="1" noIndent maxWidth="100%">
-        <Text bold>{item?.name} life is full of love and plesure</Text>
+        <Text bold>{item?.name}</Text>
         {item.reps || item.sets || item.hold ? (
           <Text>
             {item.reps ? `Reps ${item.reps}  ` : null}
             {item.sets ? `Sets ${item.sets}  ` : null}
-            {item.hold ? `Hold ${item.hold}  ` : null}
+            {item.hold ? `Hold for ${item.hold}  ` : null}
           </Text>
         ) : null}
       </Container>

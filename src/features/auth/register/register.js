@@ -93,9 +93,7 @@ export const Signup = ({navigation}) => {
         />
       </View>
       <View style={styles.mb20}>
-        <Text style={styles.gdpr}>
-          By using Movements application, you agree to
-        </Text>
+        <Text style={styles.gdpr}>By using the application, you agree to</Text>
         <Text style={styles.gdpr}>
           {'our '}
           <Text style={styles.urlText} onPress={() => openUrl()}>

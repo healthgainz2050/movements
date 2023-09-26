@@ -76,7 +76,7 @@ export const createHTML = details => {
                     <p style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 114%;text-align: left;">Reps: ${
                       exercise?.reps || 'n/a'
                     } Sets: ${exercise?.sets || 'n/a'}
-                        Hold:${exercise?.hold || 'n/a'}</p>
+                        Hold for:${exercise?.hold || 'n/a'}</p>
                     <p style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">Exercise URL</p>
                     <p style="text-indent: 0pt;text-align: left;" />
                     <p style="padding-left: 5pt;text-indent: 0pt;text-align: left;"><a

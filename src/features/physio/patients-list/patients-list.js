@@ -97,7 +97,7 @@ class PatientListView extends React.Component {
               ml="5"
               mr="5"
             />
-            <NBButton
+            {/* <NBButton
               onPress={() => {
                 this.props.navigation.navigate('SetupPaymentScreen', {
                   syncPatients: this.syncPatients,
@@ -106,7 +106,7 @@ class PatientListView extends React.Component {
               ml="5"
               mr="5"
               label="Add Payments"
-            />
+            /> */}
           </HStack>
 
           {isLoading && (

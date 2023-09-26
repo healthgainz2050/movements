@@ -47,8 +47,7 @@ export const AssignedPlaylist = ({route, navigation}) => {
         <Text style={styles.playlistName}> {playlist?.playlistName}</Text>
         <Text note numberOfLines={1}>
           {playlist ? 'is the playlist ' : 'There is no playlist '}
-          assigned to the{' '}
-          <Text style={styles.name}>{selectedPatient.name}</Text>
+          assigned to <Text style={styles.name}>{selectedPatient.name}</Text>
         </Text>
       </Box>
       {!playlist ? (

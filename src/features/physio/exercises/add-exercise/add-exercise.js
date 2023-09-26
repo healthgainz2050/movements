@@ -74,7 +74,7 @@ function AddExerciseForm(props) {
             </Stack>
             <Stack>
               <NBInput
-                placeholder="Hold"
+                placeholder="Hold for"
                 onChangeText={text =>
                   props.handleChange(byPropKey('hold', text))
                 }

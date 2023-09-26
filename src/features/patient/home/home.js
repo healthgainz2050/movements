@@ -143,8 +143,7 @@ export const Home = () => {
           </Box>
         ) : (
           <Text fontSize="sm" p="5" textAlign="center">
-            You don't have any exercise at the moment please contact to your
-            admin
+            You don't have any assigned exercises at the moment.
           </Text>
         )}
       </Container>

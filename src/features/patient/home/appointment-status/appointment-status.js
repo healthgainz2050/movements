@@ -52,9 +52,7 @@ export const AppointmentStatus = ({user}) => {
         </HStack>
       );
     } else {
-      return (
-        <Text fontSize="sm">You don't have any appointment at the moment</Text>
-      );
+      return <Text fontSize="sm">You don't have any appointments</Text>;
     }
   };
 

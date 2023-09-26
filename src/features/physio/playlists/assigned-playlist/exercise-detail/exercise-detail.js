@@ -76,7 +76,7 @@ function ExerciseDetailView(props) {
               <Text
                 note
                 style={{width: 110, fontWeight: 'bold', color: '#000'}}>
-                Hold
+                Hold for
               </Text>
 
               <Text>{item.hold}</Text>

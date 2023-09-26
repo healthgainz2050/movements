@@ -53,6 +53,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   infoMsg: {
+    color: '#000000',
     alignSelf: 'center',
     marginRight: 20,
   },
@@ -63,7 +64,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 5,
   },
-  alreadyBtn: {alignSelf: 'center', paddingTop: 10, paddingEnd: 30},
+  alreadyBtn: {
+    alignSelf: 'center',
+    color: '#3629C5',
+    paddingTop: 10,
+    paddingEnd: 30,
+  },
   tapText: {
     color: '#3629C5',
     alignSelf: 'center',
