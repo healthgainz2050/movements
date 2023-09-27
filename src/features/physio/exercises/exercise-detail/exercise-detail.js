@@ -82,7 +82,7 @@ export const ExerciseDetail = props => {
         {item.hold ? (
           <HStack>
             <Text bold width={'40%'}>
-              Hold
+              Hold for
             </Text>
             <Text>{item.hold}</Text>
           </HStack>

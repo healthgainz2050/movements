@@ -9,8 +9,9 @@ import {images} from '../../../assets';
 import GlobalContext from '../../../services/context/globalContext';
 import {handleLogin} from './actions';
 import {isValidForm, isValidEmail} from '../../../utils';
-
+import {PermissionsAndroid} from 'react-native';
 import {GoogleSignIn} from '../../../components/google-sign-in';
+
 export const Login = ({navigation}) => {
   const [form, setForm] = useState({
     email: null,
@@ -21,7 +22,6 @@ export const Login = ({navigation}) => {
     authChecked: false,
     config: null,
   });
-
 
   const isValid =
     isValidForm({email: form.email, password: form.password}) &&
